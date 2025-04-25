@@ -18,21 +18,38 @@
         <h3 class="name">{{ product.name }}</h3>
         <p class="price">NT$ {{ product.price }}</p>
       </div>
+      <div class="addToCart">
+        <font-awesome-icon icon="fa-solid fa-bag-shopping" @click="addToCart"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-defineProps({
-  product: { type: Object, required: true },
-  badge: { type: String, default: '' }   // 可傳入 '熱銷排行'、'新品上市'
-})
-
+// 掛載 fontawesome
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCrown, faMedal } from '@fortawesome/free-solid-svg-icons'
+import { faCrown, faMedal, faBagShopping } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faCrown, faMedal)
+library.add(faCrown, faMedal, faBagShopping)
+
+// 掛載 toast pinia
+import { useToastStore } from '@/stores/toastStore'
+const toastStore = useToastStore()
+
+// 加入購物車
+import { useCartStore } from '@/stores/cartStore'
+
+const cartStore = useCartStore()
+
+const props = defineProps({
+  product: { type: Object, required: true },
+  badge: { type: [String, Number], default: '' }  // 支援字串或數字
+})
+const addToCart = () => {
+  cartStore.addItem(props.product)
+  toastStore.showToast(`${props.product.name}已加入購物車！`)
+}
 </script>
 
 <style scoped lang="scss">
@@ -122,6 +139,24 @@ library.add(faCrown, faMedal)
         font-weight: bold;
         color: $color-dark;
         margin-top: 4px;
+      }
+    }
+
+    .addToCart {
+      position: absolute;
+      right: 16px;
+      bottom: 8px;
+      font-size: 32px;
+      color: $color-border;
+      transition: color .3s ease ;
+      cursor: pointer;
+
+      &:hover {
+        color: $color-primary;
+      }
+
+      &:active {
+        color: $color-primary
       }
     }
   }

@@ -5,12 +5,8 @@ import Home from '../pages/Home.vue'
 import LoginRegister from '../pages/LoginRegister.vue'
 import NotFound from '../pages/NotFound.vue'
 
-import Product from '../pages/Product/Product.vue'
+import ProductList from '@/pages/Product/ProductList.vue'
 import ProductDetail from '../pages/Product/ProductDetail.vue'
-import All from '../pages/Product/All.vue'
-import Couple from '../pages/Product/Couple.vue'
-import Healing from '../pages/Product/Healing.vue'
-import Useful from '../pages/Product/Useful.vue'
 
 import CheckoutLayout from '../pages/checkout/CheckoutLayout.vue'
 import CheckoutStep1 from '../pages/checkout/CheckoutStep1.vue'
@@ -29,14 +25,9 @@ const routes = [
     component: LoginRegister
   },
   {
-    path: '/product',
-    component: Product,
-    children: [
-      { path: '', name: 'All', component: All },
-      { path: 'couple', name: 'Couple', component: Couple },
-      { path: 'healing', name: 'Healing', component: Healing },
-      { path: 'useful', name: 'Useful', component: Useful },
-    ]
+    path: '/product/:category?',
+    name: 'ProductList',
+    component: ProductList
   },
   {
     path: '/product/:id',

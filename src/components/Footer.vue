@@ -1,14 +1,79 @@
 <template>
-  <div>
-    <!-- Component or Page Content -->
-    <h1>Footer</h1>
-  </div>
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="logo">Zoo GOODS</div>
+      <nav class="footer-nav">
+        <a href="#">關於我們</a>
+        <a href="#">購物須知</a>
+        <a href="#">聯絡我們</a>
+        <a href="#">隱私政策</a>
+      </nav>
+      <div class="social-media">
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-line"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Zoo GOODS. All Rights Reserved.</p>
+    </div>
+  </footer>
 </template>
 
 <script setup>
-// 邏輯區域 (Script)
+
 </script>
 
-<style scoped>
-/* 樣式區域 (CSS) */
+<style scoped lang="scss">
+.site-footer {
+  background: $color-header-bg;
+  color: $color-light-text;
+  padding: 24px 16px;
+  font-size: 14px;
+
+  .footer-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+
+      a {
+        color: $color-light-text;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .social-media {
+      display: flex;
+      gap: 12px;
+
+      a {
+        font-size: 18px;
+        color: $color-light-text;
+      }
+    }
+  }
+
+  .footer-bottom {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 12px;
+    opacity: 0.8;
+  }
+}
 </style>
