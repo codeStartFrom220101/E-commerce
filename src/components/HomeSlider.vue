@@ -110,6 +110,8 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
+@use "sass:color";
+
 .home-slider {
   position: relative;
   width: 100%;
@@ -174,7 +176,7 @@ onUnmounted(() => {
         transition: background-color 0.3s;
 
         &:hover {
-          background-color: darken($color-primary, 10%);
+          background-color: color.adjust($color-primary, $lightness: -10%);
         }
       }
     }

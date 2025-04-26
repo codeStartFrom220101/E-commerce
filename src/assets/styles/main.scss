@@ -1,4 +1,5 @@
-@import './_variables.scss';
-@import './_reset.scss';
-@import './_base.scss';
-@import './_layout.scss';
+@use "sass:color";
+@use "@/assets/styles/variables.scss" as *;
+@use "@/assets/styles/base.scss" as *;
+@use "@/assets/styles/reset.scss" as *;
+@use "@/assets/styles/layout.scss" as *;

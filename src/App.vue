@@ -21,15 +21,6 @@ import Footer from '@/components/Footer.vue'
 import Toast from '@/components/Toast.vue'
 import { ref } from 'vue'
 
-const toastRef = ref(null)
-
-// 提供全局呼叫方式
-const showGlobalToast = (msg) => {
-  toastRef.value.showToast(msg)
-}
-
-// 如果想綁到 window 方便呼叫
-window.$toast = showGlobalToast
 </script>
 
 <style scoped>

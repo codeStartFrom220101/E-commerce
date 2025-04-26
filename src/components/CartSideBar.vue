@@ -10,12 +10,16 @@
             <div class="info">
               <p class="name">{{ item.name }}</p>
               <p class="option">{{ item.option }}</p>
-              <p class="price">1 x NT${{ item.price }}</p>
+              <p class="price">{{ item.quantity }} x NT${{ item.price }}</p>
             </div>
-            <button @click="cartStore.removeItem(item.id)" class="remove-btn">
+            <button @click="cartRemove(item)" class="remove-btn">
               <font-awesome-icon :icon="['fas', 'trash-alt']" />
             </button>
           </div>
+        </div>
+
+        <div class="cart-total">
+          總金額：NT$ {{ cartStore.totalAmount }}
         </div>
 
         <button class="checkout-btn">訂單結帳</button>
@@ -30,9 +34,20 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
+// 掛載 toast pinia
+import { useToastStore } from '@/stores/toastStore'
+const toastStore = useToastStore()
+
 library.add(faTrashAlt)
 
+// 掛載 cartStore pinia
 const cartStore = useCartStore()
+
+const cartRemove = (item) => {
+  console.log(item.id);
+  cartStore.removeItem(item.id)
+  toastStore.showToast(`${item.name}偷跑離購物車！`, 'info')
+}
 </script>
 
 <style scoped lang="scss">
@@ -103,6 +118,13 @@ const cartStore = useCartStore()
           color: #555;
         }
       }
+    }
+
+    .cart-total {
+      font-size: 18px;
+      font-weight: bold;
+      text-align: right;
+      margin: 16px 0;
     }
   
     .checkout-btn {

@@ -78,7 +78,7 @@ const togglePromo = () => {
   z-index: 1000;
 
   .aside-menu {
-    width: 75vw;
+    width: 80vw;
     height: 100vh;
     background: #f9f6f1;
     padding: 20px;

@@ -48,7 +48,7 @@ const props = defineProps({
 })
 const addToCart = () => {
   cartStore.addItem(props.product)
-  toastStore.showToast(`${props.product.name}已加入購物車！`)
+  toastStore.showToast(`${props.product.name}已加入購物車！`, 'success')
 }
 </script>
 

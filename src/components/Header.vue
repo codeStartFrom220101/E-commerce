@@ -29,8 +29,6 @@ const cartStore = useCartStore()
 
 const handleCartOpen = () => {
   cartStore.openCart()
-  console.log("click");
-  
 }
 
 </script>
