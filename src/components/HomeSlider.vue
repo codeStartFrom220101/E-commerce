@@ -40,12 +40,6 @@ import { onMounted, onUnmounted } from 'vue'
 
 import SlideIndicators from '@/components/SlideIndicators.vue'
 
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCaretRight, faCaretLeft } from '@fortawesome/free-solid-svg-icons'
-
-library.add(faCaretRight, faCaretLeft)
-
 const slider = useSliderStore()
 const slides = [
   {

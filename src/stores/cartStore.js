@@ -12,17 +12,31 @@ export const useCartStore = defineStore('cart', {
     }
   },
   actions: {
-    addItem(product) {
-      const existingItem = this.items.find(item => item.id === product.id)
-      if (existingItem) {
-        existingItem.quantity++
+    /**
+     * 加入購物車
+     * @param payload 商品物件，可帶 quantity
+     * 若 payload.quantity 未指定，則預設為 1
+     */
+    addItem(payload) {
+      const qty = payload.quantity ?? 1
+      const existing = this.items.find(item => item.id === payload.id)
+      if (existing) {
+        // 累加傳入的數量
+        existing.quantity += qty
       } else {
-        this.items.push({ ...product, quantity: 1 })
+        // 新項目，設置預設或傳入的數量
+        this.items.push({
+          ...payload,
+          quantity: qty
+        })
       }
     },
     removeItem(id) {
-      console.log("why");
-      this.items = this.items.filter(item => item.id !== id)},
+      this.items = this.items.filter(item => item.id !== id)
+    },
+    clearCart() {
+      this.items = []
+    },
     openCart() {
       this.isOpen = true
     },

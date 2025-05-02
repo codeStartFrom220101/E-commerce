@@ -20,12 +20,6 @@
 <script setup>
 import { ref } from 'vue'
 
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
-
-library.add(faChevronUp, faChevronDown)
-
 const props = defineProps({
   options: { type: Array, required: true },
   defaultLabel: { type: String, default: '請選擇' },

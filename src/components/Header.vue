@@ -14,11 +14,6 @@
 </template>
 
 <script setup>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faMagnifyingGlass, faUser, faBagShopping, faBars } from '@fortawesome/free-solid-svg-icons'
-
-library.add(faMagnifyingGlass, faUser, faBagShopping, faBars)
 
 // asideMenu控制
 import { useAsideMenuStore } from '@/stores/asideMenuStore'

@@ -33,22 +33,16 @@
 </template>
 
 <script setup>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 // 掛載 toast pinia
 import { useToastStore } from '@/stores/toastStore'
 const toastStore = useToastStore()
-
-library.add(faTrashAlt)
 
 // 掛載 cartStore pinia
 import { useCartStore } from '@/stores/cartStore'
 const cartStore = useCartStore()
 
 const cartRemove = (item) => {
-  console.log(item.id);
   cartStore.removeItem(item.id)
   toastStore.showToast(`${item.name}偷跑離購物車！`, 'info')
 }

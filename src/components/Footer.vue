@@ -9,9 +9,9 @@
         <a href="#">隱私政策</a>
       </nav>
       <div class="social-media">
-        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#"><i class="fa-brands fa-line"></i></a>
+        <a href="#"><font-awesome-icon :icon="['fab', 'facebook']" /></a>
+        <a href="#"><font-awesome-icon :icon="['fab', 'line']" /></a>
+        <a href="#"><font-awesome-icon :icon="['fab', 'instagram']" /></a>
       </div>
     </div>
     <div class="footer-bottom">

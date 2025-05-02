@@ -74,11 +74,6 @@
 <script setup>
 import { ref } from 'vue'
 import { useAsideMenuStore } from '@/stores/asideMenuStore'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
-
-library.add(faChevronUp, faChevronDown)
 
 const asideMenuStore = useAsideMenuStore()
 const showCategory = ref(false)
@@ -175,7 +170,7 @@ function togglePromo() {
             }
 
             &:hover {
-              
+
               .link-style {
                 color: $color-primary;
               }

@@ -63,6 +63,18 @@ export const useProductStore = defineStore('productStore', {
     bestsellers: (state) =>
       [...state.products]
         .sort((a, b) => b.sold - a.sold)
-        .slice(0, 10)
+        .slice(0, 10),
+    
+    // 根據商品 ID，回傳同分類隨機 4 筆
+    similarProducts: (state) => (id) => {
+      const current = state.products.find(p => p.id === id)
+      if (!current) return []
+      const candidates = state.products.filter(
+        p => p.category === current.category && p.id !== id
+      )
+      // 隨機排序
+      const shuffled = [...candidates].sort(() => Math.random() - 0.5)
+      return shuffled.slice(0, 4)
+    },
   }
 })

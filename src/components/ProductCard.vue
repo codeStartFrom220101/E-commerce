@@ -28,12 +28,6 @@
 </template>
 
 <script setup>
-// 掛載 fontawesome
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCrown, faMedal, faBagShopping } from '@fortawesome/free-solid-svg-icons'
-
-library.add(faCrown, faMedal, faBagShopping)
 
 // 掛載 toast 
 import { useToastStore } from '@/stores/toastStore'
