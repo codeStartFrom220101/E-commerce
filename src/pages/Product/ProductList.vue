@@ -1,5 +1,6 @@
 <template>
   <div class="product-page">
+    <Breadcrumbs :paths="breadcrumbPaths" />
     <ProductBanner :title="bannerTitle" :background="bannerImage" />
     
     <div class="sectionTitle-grid">
@@ -25,169 +26,145 @@
   </div>
 
   <div class="custom-pagination">
-  <span @click="prevPage" :class="{ disabled: currentPage === 1 }">‹</span>
+    <span @click="prevPage" :class="{ disabled: currentPage === 1 }">‹</span>
 
-  <span
-    v-for="page in totalPages"
-    :key="page"
-    @click="goToPage(page)"
-    :class="{ active: page === currentPage }"
-  >
-    {{ page }}
-  </span>
+    <span
+      v-for="page in totalPages"
+      :key="page"
+      @click="goToPage(page)"
+      :class="{ active: page === currentPage }"
+    >
+      {{ page }}
+    </span>
 
-  <span @click="nextPage" :class="{ disabled: currentPage === totalPages }">›</span>
-</div>
-
+    <span @click="nextPage" :class="{ disabled: currentPage === totalPages }">›</span>
+  </div>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProductStore } from '@/stores/productStore'
+
+import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import ProductBanner from '@/components/ProductBanner.vue'
+import SectionTitle from '@/components/SectionTitle.vue'
+import CostumSelectDropdown from '@/components/CostumSelectDropdown.vue'
 import ProductCard from '@/components/ProductCard.vue'
 
-const route = useRoute()
-const store = useProductStore()
-
-const category = computed(() => route.params.category || 'all')
-
-const filteredProducts = computed(() => {
-  if (category.value === 'all') return store.products
-  return store.products.filter(p => p.category === category.value)
-})
-
-// Banner 樣式動態設定
-const bannerMap = {
-  all: { title: '探索全站好物', background: '/images/飛機啦.png' },
-  couple: { title: '甜蜜情侶專區', background: '/images/banner-couple.jpg' },
-  healing: { title: '療癒小物集合', background: '/images/banner-healing.jpg' },
-  useful: { title: '實用生活選品', background: '/images/banner-useful.jpg' }
-}
-
-const bannerTitle = computed(() => bannerMap[category.value]?.title || '精選商品')
-const bannerImage = computed(() => bannerMap[category.value]?.background || '/images/default-banner.jpg')
-
-
-// 標題切換
-import SectionTitle from '@/components/SectionTitle.vue'
-const titleMap = {
+// 分類對映中文標籤
+const categoryLabels = {
   all: '全部商品',
   couple: '情侶專區',
   healing: '療癒小物',
   useful: '實用選品'
 }
 
-const sectionTitle = computed(() => titleMap[category.value] || '精選商品')
+// 1. 取得路由參數、Pinia Store
+const route = useRoute()
+const store = useProductStore()
 
+// 2. 分類參數變動，通知 Store 並重置頁數
+const category = computed(() => route.params.category || 'all')
+watch(category, (newCat) => {
+  store.setCategory(newCat)
+  currentPage.value = 1
+})
 
-// 下拉選單
-import CostumSelectDropdown from '@/components/CostumSelectDropdown.vue'
+// 3. 元件掛載時，先抓一次 mock 資料，並設初始分類
+onMounted(async () => {
+  await store.fetchProducts()
+  store.setCategory(category.value)
+})
 
+// 4. 下拉選排序：呼叫 Store action
+function handleSort(option) {
+  store.setSort(option.value)
+  currentPage.value = 1
+}
+
+// 5. 下拉選頁數：元件內管理
+const pageSize = ref(12)
+function handlePageSize(option) {
+  pageSize.value = option.value === 'large'
+    ? 36
+    : option.value === 'middle'
+    ? 24
+    : 12
+  currentPage.value = 1
+}
+
+// 6. 分頁狀態
+const currentPage = ref(1)
+const displayedProducts = computed(() => {
+  const list = store.filteredAndSorted
+  const size = Number(pageSize.value) || 12
+  const start = (currentPage.value - 1) * size
+  return list.slice(start, start + size)
+})
+const totalPages = computed(() =>
+  Math.ceil(store.filteredAndSorted.length / pageSize.value)
+)
+function goToPage(page) {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
+  }
+}
+function nextPage() {
+  if (currentPage.value < totalPages.value) currentPage.value++
+}
+function prevPage() {
+  if (currentPage.value > 1) currentPage.value--
+}
+
+// 7. 其他固定資料
+const bannerMap = {
+  all:    { title: '探索全站好物',     background: '/images/飛機啦.png' },
+  couple: { title: '甜蜜情侶專區',     background: '/images/banner-couple.jpg' },
+  healing:{ title: '療癒小物集合',     background: '/images/banner-healing.jpg' },
+  useful: { title: '實用生活選品',     background: '/images/banner-useful.jpg' }
+}
+const bannerTitle = computed(() =>
+  bannerMap[category.value]?.title || '精選商品'
+)
+const bannerImage = computed(() =>
+  bannerMap[category.value]?.background || '/images/default-banner.jpg'
+)
+const titleMap = {
+  all: '全部商品',
+  couple: '情侶專區',
+  healing: '療癒小物',
+  useful: '實用選品'
+}
+const sectionTitle = computed(() =>
+  titleMap[category.value] || '精選商品'
+)
+const breadcrumbPaths = computed(() => {
+  const paths = [
+    { name: '首頁', link: '/' },
+    { name: categoryLabels.all, link: '/product' }
+  ]
+  if (category.value !== 'all') {
+    paths.push({
+      name: categoryLabels[category.value],
+      link: `/product/${category.value}`
+    })
+  }
+  return paths
+})
 const sortOptions1 = [
   { label: '上架時間：由新到舊', value: 'newest' },
   { label: '上架時間：由舊到新', value: 'oldest' },
-  { label: '價格：由低至高', value: 'priceLow' },
-  { label: '價格：由高至低', value: 'priceHigh' },
-  { label: '銷量：由高至低', value: 'salesHigh' },
-  { label: '銷量：由低至高', value: 'salesLow' },
+  { label: '價格：由低至高',     value: 'priceLow' },
+  { label: '價格：由高至低',     value: 'priceHigh' },
+  { label: '銷量：由高至低',     value: 'salesHigh' },
+  { label: '銷量：由低至高',     value: 'salesLow' },
 ]
-
-
 const sortOptions2 = [
   { label: '每頁顯示36個', value: 'large' },
   { label: '每頁顯示24個', value: 'middle' },
   { label: '每頁顯示12個', value: 'small' },
 ]
-
-
-// 處理排序
-const sortType = ref('')  // 紀錄當前排序條件
-const pageSize = ref(12);
-
-const sortedProducts = computed(() => {
-  let products = [...filteredProducts.value]
-
-  switch (sortType.value) {
-    case 'newest':
-      return products.sort((a, b) => b.dateAdded - a.dateAdded)
-    case 'oldest':
-      return products.sort((a, b) => a.dateAdded - b.dateAdded)
-    case 'priceLow':
-      return products.sort((a, b) => a.price - b.price)
-    case 'priceHigh':
-      return products.sort((a, b) => b.price - a.price)
-    case 'salesHigh':
-      return products.sort((a, b) => b.sales - a.sales)
-    case 'salesLow':
-      return products.sort((a, b) => a.sales - b.sales)
-    default:
-      return products
-  }
-})
-
-
-const handleSort = (option) => {
-  sortType.value = option.value
-  currentPage.value = 1  // 重置到第1頁
-}
-
-const handlePageSize = (option) => {
-  switch (option.value) {
-    case 'large':
-      pageSize.value = 36
-      break
-    case 'middle':
-      pageSize.value = 24
-      break
-    case 'small':
-      pageSize.value = 12
-      break
-    default:
-      pageSize.value = 12
-  }
-  currentPage.value = 1  // 換頁大小時也重置到第1頁
-}
-
-
-
-const displayedProducts = computed(() => {
-  if (!Array.isArray(sortedProducts.value)) return []
-
-  const size = Number(pageSize.value) || 12
-  const start = (currentPage.value - 1) * size
-  const end = start + size
-
-  return sortedProducts.value.slice(start, end)
-})
-
-// 分頁按鈕
-const currentPage = ref(1)
-
-const totalPages = computed(() => {
-  return Math.ceil(sortedProducts.value.length / pageSize.value)
-})
-
-const goToPage = (page) => {
-  if (page >= 1 && page <= totalPages.value) {
-    currentPage.value = page
-  }
-}
-
-const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
-    currentPage.value++
-  }
-}
-
-const prevPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value--
-  }
-}
-
-
 </script>
 
 <style scoped lang="scss">
@@ -240,5 +217,4 @@ const prevPage = () => {
     }
   }
 }
-
 </style>

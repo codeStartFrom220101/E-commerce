@@ -24,6 +24,8 @@ const formattedTitle = computed(() => {
 </script>
 
 <style scoped lang="scss">
+@use "sass:color";
+
 .promo-banner {
   position: relative;
   width: 100%;
@@ -57,7 +59,7 @@ const formattedTitle = computed(() => {
       transition: background-color 0.3s;
 
       &:hover {
-        background-color: darken($color-primary, 10%);
+        background-color: color.adjust($color-primary, $lightness: -10%);
       }
     }
   }

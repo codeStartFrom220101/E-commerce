@@ -1,0 +1,402 @@
+[
+  {
+    "id": 1,
+    "name": "虎虎玩偶",
+    "price": 320,
+    "sold": 50,
+    "createdAt": "2024-04-25",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/1/600/400",
+    "description": "柔軟毛絨虎虎玩偶，可作抱枕與裝飾，療癒又實用。"
+  },
+  {
+    "id": 2,
+    "name": "木頭大象筷架",
+    "price": 180,
+    "sold": 30,
+    "createdAt": "2024-04-20",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/2/600/400",
+    "description": "天然木質大象造型，穩固承筷，不易滑落又增添餐桌趣味。"
+  },
+  {
+    "id": 3,
+    "name": "愛心河馬搖搖杯",
+    "price": 250,
+    "sold": 45,
+    "createdAt": "2024-04-22",
+    "category": "couple",
+    "image": "https://picsum.photos/seed/3/600/400",
+    "description": "可愛河馬造型搖搖杯，防漏設計，外出攜帶方便又療癒。"
+  },
+  {
+    "id": 4,
+    "name": "萌兔擺飾",
+    "price": 199,
+    "sold": 60,
+    "createdAt": "2024-04-23",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/4/600/400",
+    "description": "簡約萌兔擺件，小巧不佔空間，為居家增添療癒氛圍。"
+  },
+  {
+    "id": 5,
+    "name": "超人氣刺蝟",
+    "price": 320,
+    "sold": 90,
+    "createdAt": "2024-04-10",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/5/600/400",
+    "description": "立體刺蝟公仔，毛茸茸手感，可作桌面擺飾或撲滿。"
+  },
+  {
+    "id": 6,
+    "name": "可愛鴨子組",
+    "price": 280,
+    "sold": 85,
+    "createdAt": "2024-04-12",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/6/600/400",
+    "description": "親子鴨子造型收納盒，可分類小物，實用又增添童趣。"
+  },
+  {
+    "id": 7,
+    "name": "療癒白熊",
+    "price": 300,
+    "sold": 70,
+    "createdAt": "2024-04-15",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/7/600/400",
+    "description": "粉嫩白熊公仔，抱起來柔軟暖心，陪伴放鬆時光。"
+  },
+  {
+    "id": 8,
+    "name": "幸福花鹿",
+    "price": 350,
+    "sold": 40,
+    "createdAt": "2024-04-18",
+    "category": "couple",
+    "image": "https://picsum.photos/seed/8/600/400",
+    "description": "優雅花鹿陶瓷擺飾，質感細緻，為家中增添浪漫氛圍。"
+  },
+  {
+    "id": 9,
+    "name": "松鼠小物",
+    "price": 260,
+    "sold": 55,
+    "createdAt": "2024-04-17",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/9/600/400",
+    "description": "小巧松鼠造型收納盒，可放耳機與飾品，實用又俏皮。"
+  },
+  {
+    "id": 10,
+    "name": "萌虎杯墊組",
+    "price": 150,
+    "sold": 35,
+    "createdAt": "2024-04-19",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/10/600/400",
+    "description": "虎紋杯墊套組，防滑隔熱，保護桌面又增添可愛感。"
+  },
+  {
+    "id": 11,
+    "name": "森林系筆袋",
+    "price": 220,
+    "sold": 20,
+    "createdAt": "2024-04-21",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/11/600/400",
+    "description": "森林系動物印花筆袋，拉鍊順暢，大容量收納文具。"
+  },
+  {
+    "id": 12,
+    "name": "胖胖貓擺飾",
+    "price": 270,
+    "sold": 65,
+    "createdAt": "2024-04-16",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/12/600/400",
+    "description": "圓滾滾胖貓造型擺件，質地細膩，療癒桌面空間。"
+  },
+  {
+    "id": 13,
+    "name": "療癒狐狸燈",
+    "price": 390,
+    "sold": 75,
+    "createdAt": "2024-04-14",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/13/600/400",
+    "description": "暖光狐狸造型夜燈，柔和光線，兼具裝飾與照明功能。"
+  },
+  {
+    "id": 14,
+    "name": "雲朵羊玩偶",
+    "price": 310,
+    "sold": 50,
+    "createdAt": "2024-04-13",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/14/600/400",
+    "description": "雲朵般柔軟羊玩偶，可當抱枕或午睡枕，療癒又舒服。"
+  },
+  {
+    "id": 15,
+    "name": "小熊收納盒",
+    "price": 240,
+    "sold": 25,
+    "createdAt": "2024-04-11",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/15/600/400",
+    "description": "熊造型收納盒，多層分隔，分類小物方便取用。"
+  },
+  {
+    "id": 16,
+    "name": "貓頭鷹杯子",
+    "price": 260,
+    "sold": 42,
+    "createdAt": "2024-04-09",
+    "category": "couple",
+    "image": "https://picsum.photos/seed/16/600/400",
+    "description": "質感貓頭鷹陶瓷杯，刻紋精緻，適合日常飲品使用。"
+  },
+  {
+    "id": 17,
+    "name": "療癒章魚君",
+    "price": 330,
+    "sold": 68,
+    "createdAt": "2024-04-08",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/17/600/400",
+    "description": "柔軟章魚公仔，可當抱枕或擺飾，療癒又可愛。"
+  },
+  {
+    "id": 18,
+    "name": "可愛樹懶",
+    "price": 290,
+    "sold": 58,
+    "createdAt": "2024-04-07",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/18/600/400",
+    "description": "慵懶樹懶絨毛玩偶，輕便可攜，隨時療癒心情。"
+  },
+  {
+    "id": 19,
+    "name": "森林兔夜燈",
+    "price": 350,
+    "sold": 32,
+    "createdAt": "2024-04-06",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/19/600/400",
+    "description": "森林兔造型夜燈，暖光柔和，可定時關閉，安心入睡。"
+  },
+  {
+    "id": 20,
+    "name": "迷你長頸鹿",
+    "price": 210,
+    "sold": 48,
+    "createdAt": "2024-04-05",
+    "category": "couple",
+    "image": "https://picsum.photos/seed/20/600/400",
+    "description": "迷你長頸鹿公仔，輕巧不佔空間，桌面小裝飾實用。"
+  },
+  {
+    "id": 21,
+    "name": "微笑鯨魚玩偶",
+    "price": 300,
+    "sold": 52,
+    "createdAt": "2024-04-24",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/21/600/400",
+    "description": "微笑鯨魚毛絨公仔，手感柔軟，可作抱枕或車用擺飾。"
+  },
+  {
+    "id": 22,
+    "name": "療癒青蛙公仔",
+    "price": 220,
+    "sold": 47,
+    "createdAt": "2024-04-23",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/22/600/400",
+    "description": "可愛青蛙絨毛公仔，立體造型，適合擺放收納。"
+  },
+  {
+    "id": 23,
+    "name": "草原綿羊抱枕",
+    "price": 350,
+    "sold": 65,
+    "createdAt": "2024-04-22",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/23/600/400",
+    "description": "綿羊造型抱枕，親膚絨毛，坐臥皆宜，療癒又舒適。"
+  },
+  {
+    "id": 24,
+    "name": "咖啡熊馬克杯",
+    "price": 280,
+    "sold": 40,
+    "createdAt": "2024-04-21",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/24/600/400",
+    "description": "咖啡熊圖案馬크杯，大容量握把舒適，日常飲品首選。"
+  },
+  {
+    "id": 25,
+    "name": "小鹿筆筒",
+    "price": 190,
+    "sold": 38,
+    "createdAt": "2024-04-20",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/25/600/400",
+    "description": "小鹿造型筆筒，穩固收納筆具，桌面整潔又增趣味。"
+  },
+  {
+    "id": 26,
+    "name": "海豹療癒球",
+    "price": 210,
+    "sold": 55,
+    "createdAt": "2024-04-19",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/26/600/400",
+    "description": "海豹造型壓力球，柔軟可捏，紓壓小物隨身攜帶。"
+  },
+  {
+    "id": 27,
+    "name": "森林熊便條紙",
+    "price": 130,
+    "sold": 60,
+    "createdAt": "2024-04-18",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/27/600/400",
+    "description": "熊型便條紙，撕取方便，記錄待辦事宜又增趣味。"
+  },
+  {
+    "id": 28,
+    "name": "貓咪玻璃杯",
+    "price": 250,
+    "sold": 42,
+    "createdAt": "2024-04-17",
+    "category": "couple",
+    "image": "https://picsum.photos/seed/28/600/400",
+    "description": "貓咪耳朵玻璃杯，造型討喜，厚壁隔熱，飲用安全。"
+  },
+  {
+    "id": 29,
+    "name": "長頸鹿置物架",
+    "price": 400,
+    "sold": 30,
+    "createdAt": "2024-04-16",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/29/600/400",
+    "description": "長頸鹿造型置物架，多層設計，收納小物兼裝飾。"
+  },
+  {
+    "id": 30,
+    "name": "迷你刺蝟燈",
+    "price": 320,
+    "sold": 70,
+    "createdAt": "2024-04-15",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/30/600/400",
+    "description": "刺蝟造型小夜燈，USB供電，暖光柔和，陪伴夜晚。"
+  },
+  {
+    "id": 31,
+    "name": "樹懶隨身鏡",
+    "price": 180,
+    "sold": 28,
+    "createdAt": "2024-04-14",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/31/600/400",
+    "description": "樹懶造型隨身鏡，輕巧可折疊，便於攜帶補妝。"
+  },
+  {
+    "id": 32,
+    "name": "狐狸收納袋",
+    "price": 270,
+    "sold": 50,
+    "createdAt": "2024-04-13",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/32/600/400",
+    "description": "狐狸圖案收納袋，多功能防水，出差旅行好幫手。"
+  },
+  {
+    "id": 33,
+    "name": "鴨子夜燈",
+    "price": 310,
+    "sold": 62,
+    "createdAt": "2024-04-12",
+    "category": "healing",
+    "image": "https://picsum.photos/seed/33/600/400",
+    "description": "鴨子造型夜燈，觸控調光，呵護夜晚安心睡眠。"
+  },
+  {
+    "id": 34,
+    "name": "胖胖熊便當袋",
+    "price": 230,
+    "sold": 36,
+    "createdAt": "2024-04-11",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/34/600/400",
+    "description": "熊造型便當袋，隔熱保溫，便於攜帶，增添用餐樂趣。"
+  },
+  {
+    "id": 35,
+    "name": "羊駝造型杯墊",
+    "price": 150,
+    "sold": 45,
+    "createdAt": "2024-04-10",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/35/600/400",
+    "description": "羊駝紋理杯墊，吸水隔熱，保護桌面又可愛繽紛。"
+  },
+  {
+    "id": 36,
+    "name": "迷你兔化妝鏡",
+    "price": 200,
+    "sold": 53,
+    "createdAt": "2024-04-09",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/36/600/400",
+    "description": "兔耳化妝鏡，立架設計，角度可調，梳妝更便利。"
+  },
+  {
+    "id": 37,
+    "name": "療癒熊桌曆",
+    "price": 260,
+    "sold": 49,
+    "createdAt": "2024-04-08",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/37/600/400",
+    "description": "立式熊造型桌曆，月曆更換方便，兼具裝飾與實用。"
+  },
+  {
+    "id": 38,
+    "name": "企鵝筆記本",
+    "price": 180,
+    "sold": 41,
+    "createdAt": "2024-04-07",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/38/600/400",
+    "description": "企鵝封面筆記本，內頁細條紋，書寫順滑，攜帶方便。"
+  },
+  {
+    "id": 39,
+    "name": "萌犬隨行杯",
+    "price": 290,
+    "sold": 57,
+    "createdAt": "2024-04-06",
+    "category": "couple",
+    "image": "https://picsum.photos/seed/39/600/400",
+    "description": "狗狗造型隨行杯，防漏杯蓋，大容量適合外出飲用。"
+  },
+  {
+    "id": 40,
+    "name": "貓掌滑鼠墊",
+    "price": 210,
+    "sold": 68,
+    "createdAt": "2024-04-05",
+    "category": "useful",
+    "image": "https://picsum.photos/seed/40/600/400",
+    "description": "貓掌握感滑鼠墊，防滑底墊，提升操控舒適度。"
+  }
+]

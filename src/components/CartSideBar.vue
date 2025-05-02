@@ -4,7 +4,11 @@
       <div class="cart-sidebar" @click.stop>
         <h2>購物車</h2>
 
-        <div class="cart-items">
+        <div class="cart-none" v-if="cartStore.items.length == 0">
+          您的購物車空空如也呢!!!
+        </div>
+
+        <div class="cart-items" v-else>
           <div v-for="item in cartStore.items" :key="item.id" class="cart-item">
             <img :src="item.image" :alt="item.name" />
             <div class="info">
@@ -29,7 +33,6 @@
 </template>
 
 <script setup>
-import { useCartStore } from '@/stores/cartStore'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
@@ -41,6 +44,7 @@ const toastStore = useToastStore()
 library.add(faTrashAlt)
 
 // 掛載 cartStore pinia
+import { useCartStore } from '@/stores/cartStore'
 const cartStore = useCartStore()
 
 const cartRemove = (item) => {
@@ -67,19 +71,30 @@ const cartRemove = (item) => {
     width: 80%;
     height: 100%;
     background: #f9f6f1;
-    padding: 20px;
     box-shadow: -2px 0 8px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
+    padding: 16px;
   
     h2 {
       font-size: 20px;
       margin-bottom: 16px;
     }
+
+    .cart-none {
+      flex-grow: 1;
+      overflow-y: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $color-text;
+      font-weight: bold;
+    }
   
     .cart-items {
       flex-grow: 1;
       overflow-y: auto;
+      padding-right: 16px;
   
       .cart-item {
         display: flex;
@@ -101,7 +116,7 @@ const cartRemove = (item) => {
           }
   
           .option {
-            color: #333;
+            color: $color-text;
             font-weight: bold;
           }
   
@@ -115,7 +130,7 @@ const cartRemove = (item) => {
           border: none;
           font-size: 18px;
           cursor: pointer;
-          color: #555;
+          color: $color-text;
         }
       }
     }

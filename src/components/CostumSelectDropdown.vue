@@ -43,17 +43,17 @@ const toggleDropdown = () => {
 const selectOption = (option) => {
   selectedOption.value = option
   dropdownOpen.value = false
-  emit('select', option)   // 🔥 通知父層選擇了什麼
+  emit('select', option)   //  通知父層選擇了什麼
 }
 </script>
 
 
 <style scoped lang="scss">
 .custom-select {
-  // width: 50%;
   border-bottom: 1px solid $color-text;
   position: relative;
   cursor: pointer;
+  font-size: 14px;
 
   .select-header {
     padding: 10px;
@@ -70,11 +70,14 @@ const selectOption = (option) => {
     left: 0;
     width: 100%;
     background: #fff;
-    border: 1px solid #ccc;
+    border: 1px solid $color-border;
+    border-bottom: none;
     z-index: 10;
 
     li {
       padding: 10px;
+      border-bottom: 1px solid $color-border;
+
       &:hover {
         background: #eee;
       }

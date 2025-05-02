@@ -6,8 +6,7 @@
           <h1>Zoo-GOODS</h1>
           <button @click="asideMenuStore.closeMenu()">✕</button>
         </div>
-  
-        <!-- 商品分類 -->
+
         <!-- 商品分類 -->
         <div class="menu-item">
           <div class="menu-title" @click="toggleCategory">
@@ -16,10 +15,27 @@
               <font-awesome-icon :icon="['fas', showCategory ? 'chevron-up' : 'chevron-down']" />
             </span>
           </div>
-          <ul :class="{ active: showCategory}">
-            <li>實用小物</li>
-            <li>情侶小物</li>
-            <li>療癒小物</li>
+          <ul :class="{ active: showCategory }">
+            <li>
+              <router-link class="link-style" to="/product" @click.native.prevent="asideMenuStore.closeMenu()">
+                全部商品
+              </router-link>
+            </li>
+            <li>
+              <router-link class="link-style" to="/product/useful" @click.native.prevent="asideMenuStore.closeMenu()">
+                實用選品
+              </router-link>
+            </li>
+            <li>
+              <router-link class="link-style" to="/product/couple" @click.native.prevent="asideMenuStore.closeMenu()">
+                情侶專區
+              </router-link>
+            </li>
+            <li>
+              <router-link class="link-style" to="/product/healing" @click.native.prevent="asideMenuStore.closeMenu()">
+                療癒小物
+              </router-link>
+            </li>
           </ul>
         </div>
 
@@ -31,10 +47,22 @@
               <font-awesome-icon :icon="['fas', showPromo ? 'chevron-up' : 'chevron-down']" />
             </span>
           </div>
-          <ul :class="{ active: showPromo}">
-            <li>520免運</li>
-            <li>療癒選物99起</li>
-            <li>情侶小物兩件折10元</li>
+          <ul :class="{ active: showPromo }">
+            <li>
+              <router-link class="link-style" to="/product?promo=free-shipping" @click.native.prevent="asideMenuStore.closeMenu()">
+                520免運
+              </router-link>
+            </li>
+            <li>
+              <router-link class="link-style" to="/product?promo=healing" @click.native.prevent="asideMenuStore.closeMenu()">
+                療癒選物99起
+              </router-link>
+            </li>
+            <li>
+              <router-link class="link-style" to="/product?promo=couple-discount" @click.native.prevent="asideMenuStore.closeMenu()">
+                情侶小物兩件折10元
+              </router-link>
+            </li>
           </ul>
         </div>
 
@@ -45,27 +73,29 @@
 
 <script setup>
 import { ref } from 'vue'
-
+import { useAsideMenuStore } from '@/stores/asideMenuStore'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faChevronUp, faChevronDown)
 
-import { useAsideMenuStore } from '@/stores/asideMenuStore'
 const asideMenuStore = useAsideMenuStore()
-
 const showCategory = ref(false)
 const showPromo = ref(false)
 
-const toggleCategory = () => {
+function toggleCategory() {
   showCategory.value = !showCategory.value
 }
-
-const togglePromo = () => {
+function togglePromo() {
   showPromo.value = !showPromo.value
 }
 </script>
+
+<style scoped lang="scss">
+/* ... 保持原有样式 ... */
+</style>
+
 
 <style scoped lang="scss">
 .overlay {
@@ -138,8 +168,17 @@ const togglePromo = () => {
             font-size: 16px;
             transition: padding .3s ease;
   
+            
+            .link-style {
+              text-decoration: none;
+              color: $color-text;
+            }
+
             &:hover {
-              color: #c49f72;
+              
+              .link-style {
+                color: $color-primary;
+              }
             }
           }
         }

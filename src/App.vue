@@ -19,7 +19,6 @@ import Footer from '@/components/Footer.vue'
 
 // toast
 import Toast from '@/components/Toast.vue'
-import { ref } from 'vue'
 
 </script>
 

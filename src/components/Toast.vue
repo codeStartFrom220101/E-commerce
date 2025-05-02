@@ -36,7 +36,7 @@ const toastStore = useToastStore()
 }
 
 .toast {
-  min-width: 200px;
+  min-width: 300px;
   padding: 12px 24px;
   border-radius: 24px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);

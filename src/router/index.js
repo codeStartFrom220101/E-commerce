@@ -6,7 +6,6 @@ import LoginRegister from '../pages/LoginRegister.vue'
 import NotFound from '../pages/NotFound.vue'
 
 import ProductList from '@/pages/Product/ProductList.vue'
-import ProductDetail from '../pages/Product/ProductDetail.vue'
 
 import CheckoutLayout from '../pages/checkout/CheckoutLayout.vue'
 import CheckoutStep1 from '../pages/checkout/CheckoutStep1.vue'
@@ -25,14 +24,14 @@ const routes = [
     component: LoginRegister
   },
   {
+    path: '/product/:id(\\d+)',
+    name: 'ProductDetail',
+    component: () => import('@/pages/Product/ProductDetail.vue')
+  },
+  {
     path: '/product/:category?',
     name: 'ProductList',
     component: ProductList
-  },
-  {
-    path: '/product/:id',
-    name: 'ProductDetail',
-    component: ProductDetail
   },
   {
     path: '/checkout',
@@ -53,7 +52,15 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    // 如果是浏览器前进/后退，可保留原位置
+    if (savedPosition) {
+      return savedPosition
+    }
+    // 默认都滚到顶部
+    return { left: 0, top: 0 }
+  }
 })
 
 export default router

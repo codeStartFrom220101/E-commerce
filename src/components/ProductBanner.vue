@@ -16,6 +16,7 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
+@use "sass:color";
 .product-hero-banner {
   position: relative;
   width: 100%;
@@ -52,7 +53,7 @@ defineProps({
       transition: background 0.3s;
 
       &:hover {
-        background: darken($color-primary, 10%);
+        background: color.adjust($color-primary, $lightness: -10%);
       }
     }
   }

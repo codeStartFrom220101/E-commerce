@@ -7,21 +7,23 @@
     </div>
 
     <!-- 商品卡片 -->
-    <div class="product-card">
-      <div v-if="badge" class="badge">
-        <div class="badge-content">{{ badge }}</div>
+    <router-link :to="`/product/${product.id}`" class="link-style">
+      <div class="product-card">
+        <div v-if="badge" class="badge">
+          <div class="badge-content">{{ badge }}</div>
+        </div>
+        <div class="image-wrap">
+          <img :src="product.image" :alt="product.name" />
+        </div>
+        <div class="info">
+          <h3 class="name">{{ product.name }}</h3>
+          <p class="price">NT$ {{ product.price }}</p>
+        </div>
+        <div class="addToCart">
+          <font-awesome-icon icon="fa-solid fa-bag-shopping" @click.stop.prevent="addToCart"/>
+        </div>
       </div>
-      <div class="image-wrap">
-        <img :src="product.image" :alt="product.name" />
-      </div>
-      <div class="info">
-        <h3 class="name">{{ product.name }}</h3>
-        <p class="price">NT$ {{ product.price }}</p>
-      </div>
-      <div class="addToCart">
-        <font-awesome-icon icon="fa-solid fa-bag-shopping" @click="addToCart"/>
-      </div>
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -33,11 +35,11 @@ import { faCrown, faMedal, faBagShopping } from '@fortawesome/free-solid-svg-ico
 
 library.add(faCrown, faMedal, faBagShopping)
 
-// 掛載 toast pinia
+// 掛載 toast 
 import { useToastStore } from '@/stores/toastStore'
 const toastStore = useToastStore()
 
-// 加入購物車
+// 掛載 購物車
 import { useCartStore } from '@/stores/cartStore'
 
 const cartStore = useCartStore()
@@ -82,83 +84,88 @@ const addToCart = () => {
     }
   }
 
-  .product-card {
-    position: relative;
-    background-color: #fff;
-    border: 1px solid $color-border;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  
-    .badge {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      top: 20px;
-      left: 20px;
-      width: 100px;
-      background: $color-secondary;
-      transform: rotate(-45deg) translate(-50%, -50%);
-      transform-origin: top left;
-  
-      &-content {
-        transform: rotate(45deg);
-        color: $color-dark;
-        font-weight: bold;
-      }
-    }
-  
-    .image-wrap {
-      width: 100%;
-      aspect-ratio: 1 / 1;
+  .link-style {
+    text-decoration: none;
+
+    .product-card {
+      position: relative;
+      background-color: #fff;
+      border: 1px solid $color-border;
+      border-radius: 12px;
       overflow: hidden;
-      padding: 1rem;
-  
-      img {
+      display: flex;
+      flex-direction: column;
+    
+      .badge {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 20px;
+        left: 20px;
+        width: 100px;
+        background: $color-secondary;
+        transform: rotate(-45deg) translate(-50%, -50%);
+        transform-origin: top left;
+    
+        &-content {
+          transform: rotate(45deg);
+          color: $color-dark;
+          font-weight: bold;
+        }
+      }
+    
+      .image-wrap {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-        border-radius: 6px;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        padding: 1rem;
+    
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.3s ease;
+          border-radius: 6px;
+        }
       }
-    }
+    
+      .info {
+        padding: 0 12px 12px 12px;
+    
+        .name {
+          font-size: 16px;
+          font-weight: bold;
+          color: $color-text;
+        }
+    
+        .price {
+          font-size: 14px;
+          font-weight: bold;
+          color: $color-dark;
+          margin-top: 4px;
+        }
+      }
   
-    .info {
-      padding: 0 12px 12px 12px;
+      .addToCart {
+        position: absolute;
+        right: 16px;
+        bottom: 8px;
+        font-size: 32px;
+        color: $color-border;
+        transition: color .3s ease ;
+        cursor: pointer;
   
-      .name {
-        font-size: 16px;
-        font-weight: bold;
-        color: $color-text;
-      }
+        &:hover {
+          color: $color-primary;
+        }
   
-      .price {
-        font-size: 14px;
-        font-weight: bold;
-        color: $color-dark;
-        margin-top: 4px;
-      }
-    }
-
-    .addToCart {
-      position: absolute;
-      right: 16px;
-      bottom: 8px;
-      font-size: 32px;
-      color: $color-border;
-      transition: color .3s ease ;
-      cursor: pointer;
-
-      &:hover {
-        color: $color-primary;
-      }
-
-      &:active {
-        color: $color-primary
+        &:active {
+          color: $color-primary
+        }
       }
     }
   }
+
 }
 </style>
