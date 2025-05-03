@@ -1,6 +1,5 @@
 <template>
   <div class="checkout-step1">
-    <CheckoutBreadcrumbs :current-step="1" />
     <div class="cart-summary">
       <h2>購物車 ({{ totalItems }} 件)</h2>
       <div v-for="item in cartItems" :key="item.id" class="cart-item">
@@ -49,9 +48,8 @@
 <script setup>
 import { computed, reactive } from 'vue'
 import { useCartStore } from '@/stores/cartStore'
-import CheckoutBreadcrumbs from '@/components/CheckoutBreadcrumbs.vue'
-import SwipeList from '@/components/SwipeList.vue'
-import FormSelect from '@/components/FormSelect.vue'
+// import SwipeList from '@/components/SwipeList.vue'
+// import FormSelect from '@/components/FormSelect.vue'
 import { useRouter } from 'vue-router'
 
 const cartStore = useCartStore()
