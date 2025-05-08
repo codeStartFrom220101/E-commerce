@@ -60,7 +60,7 @@ const props = defineProps({
         color: $color-light-text;
         text-align: center;
         line-height: 32px;
-        transition: all .3s ease .3s;
+        transition: all .3s ease 3s;
 
         &.active {
           background: $color-primary;
@@ -84,10 +84,11 @@ const props = defineProps({
       left: calc(100% / 6);
       top: 50%;
       transform: translateY(-50%);
+      width: 0;
       height: 3px;
       background: $color-primary;
       z-index: -1;
-      transition: width .3s ease;
+      transition: width 3s ease;
     }
   }
 
@@ -106,7 +107,7 @@ const props = defineProps({
 
         &.active {
           color: #000;
-          transition: all .3s ease .3s;
+          transition: all .3s ease 3s;
         }
       }
     }

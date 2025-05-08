@@ -37,6 +37,12 @@ export const useCartStore = defineStore('cart', {
     clearCart() {
       this.items = []
     },
+    updateQuantity({ id, quantity }) {
+      const item = this.items.find(i => i.id === id)
+      if (item) {
+        item.quantity = quantity
+      }
+    },
     openCart() {
       this.isOpen = true
     },

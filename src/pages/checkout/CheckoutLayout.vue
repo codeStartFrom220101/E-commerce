@@ -5,7 +5,9 @@
     <CheckoutBreadcrumbs :current-step="currentStep" />
 
     <!-- 2. 子路由內容 -->
-    <router-view />
+    <div class="router-layout">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -25,3 +27,9 @@ const currentStep = computed(() => {
   }
 })
 </script>
+
+<style scoped lang="scss">
+.router-layout {
+  padding: 0 16px;
+}
+</style>

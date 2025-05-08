@@ -1,25 +1,26 @@
 <template>
   <div class="checkout-step1">
-    <div class="cart-summary">
-      <h2>購物車 ({{ totalItems }} 件)</h2>
-      <div v-for="item in cartItems" :key="item.id" class="cart-item">
-        <img :src="item.image" :alt="item.name" />
-        <div class="details">
-          <p class="name">{{ item.name }}</p>
-          <p class="options">{{ item.category }} {{ item.variant }}</p>
-          <p class="quantity">x{{ item.quantity }}</p>
-          <p class="price">NT$ {{ item.quantity * item.price }}</p>
+      <FrameContainer>
+        <template #header>
+          購物車 ({{ totalItems }} 件)
+        </template>
+        <CartItemRow
+          v-for="item in cartItems"
+          :key="item.id"
+          :item="item"
+          @remove="removeItem"
+          @updateQty="updateQuantity"
+        />
+        <!-- 已使用優惠 -->
+        <div class="discounts">
+          <p>已享用之優惠</p>
+          <ul>
+            <li v-for="p in promos" :key="p.id">
+              {{ p.name }} -NT$ {{ p.amount }}
+            </li>
+          </ul>
         </div>
-        <button class="remove" @click="removeItem(item.id)">×</button>
-      </div>
-      <div class="discounts">
-        <p>已享用之優惠</p>
-        <ul>
-          <li>情侶小物兩件折10元</li>
-          <li>全站滿520免運</li>
-        </ul>
-      </div>
-    </div>
+      </FrameContainer>
 
     <div class="additional-purchase">
       <h3>加購專區 (左右滑動)</h3>
@@ -51,6 +52,19 @@ import { useCartStore } from '@/stores/cartStore'
 // import SwipeList from '@/components/SwipeList.vue'
 // import FormSelect from '@/components/FormSelect.vue'
 import { useRouter } from 'vue-router'
+import FrameContainer from '@/components/FrameContainer.vue'
+import CartItemRow from '@/components/CartItemRow.vue'
+
+// 活動判定 
+import { usePromotionStore } from '@/stores/promotionStore'
+const promoStore = usePromotionStore()
+
+// 活動清單
+const promos = computed(() => promoStore.promotionDiscounts)
+console.log(promos);
+
+// 總折抵
+const totalDiscount = computed(() => promoStore.totalPromoDiscount)
 
 const cartStore = useCartStore()
 const cartItems = computed(() => cartStore.items)
@@ -80,8 +94,23 @@ const total = computed(() => subtotal.value + shippingFee.value - discountTotal.
 function removeItem(id) {
   cartStore.removeItem(id)
 }
+
+// 新增 updateQuantity（或你模板里叫 @updateQty 的名字）
+function updateQuantity({ id, delta, quantity }) {
+  const found = cartStore.items.find(i => i.id === id)
+  if (!found) return
+
+  // 用 delta 來調整
+  const newQty = quantity !== undefined
+    ? quantity
+    : Math.max(1, found.quantity + delta)
+
+  cartStore.updateQuantity({ id, quantity: newQty })
+}
 </script>
 
 <style scoped lang="scss">
-// .checkout-step1 { /* 样式省略 */ }
+  .discount {
+
+  }
 </style>

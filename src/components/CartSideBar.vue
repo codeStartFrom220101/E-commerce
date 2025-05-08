@@ -26,7 +26,9 @@
           總金額：NT$ {{ cartStore.totalAmount }}
         </div>
 
-        <button class="checkout-btn">訂單結帳</button>
+        <router-link :to="{ name: 'CheckoutStep1' }">
+          <button class="checkout-btn">訂單結帳</button>
+        </router-link>
       </div>
     </div>
   </transition>
