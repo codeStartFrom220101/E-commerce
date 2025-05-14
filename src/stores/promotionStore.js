@@ -30,48 +30,44 @@ export const usePromotionStore = defineStore('promotion', {
   }),
 
   getters: {
-    // 以 cartStore.items 作為輸入，回傳所有「符合條件」的活動物件
-    applicablePromos: (state) => {
+    /**
+     * 取得所有符合條件的活動
+     */
+    applicablePromos() {
       const cartStore = useCartStore()
       const items = cartStore.items
+      const now = Date.now()
 
-      return state.promotions.filter(promo => {
-        // 判斷活動時效（如果有設定）
-        const now = Date.now()
+      return this.promotions.filter(promo => {
         if (promo.start && now < new Date(promo.start)) return false
         if (promo.end   && now > new Date(promo.end))   return false
 
-        // 各種活動條件
         switch (promo.type) {
-          case 'couplePair':
-            // 算出 category='couple' 的數量
+          case 'couplePair': {
             const count = items
               .filter(i => i.category === 'couple')
               .reduce((sum, i) => sum + i.quantity, 0)
-
-              console.log(count);
-              
             return count >= 2
-
-          case 'freeShipping':
+          }
+          case 'freeShipping': {
             const subtotal = items
               .reduce((sum, i) => sum + i.price * i.quantity, 0)
             return subtotal >= promo.threshold
-
+          }
           default:
             return false
         }
       })
     },
 
-    // 直接算出「每個活動帶來的折抵金額」陣列
-    promoDiscounts: () => {
+    /**
+     * 針對每個符合條件的活動，計算它帶來的折抵金額
+     */
+    promoDiscounts() {
       const cartStore = useCartStore()
       const items = cartStore.items
-      console.log(123);
-      
 
-      return getters.applicablePromos.map(promo => {
+      return this.applicablePromos.map(promo => {
         switch (promo.type) {
           case 'couplePair': {
             const count = items
@@ -94,14 +90,12 @@ export const usePromotionStore = defineStore('promotion', {
       })
     },
 
-    // 總折扣金額
-    totalPromoDiscount(state) {
-      return state.promoDiscounts
-        .reduce((sum, p) => sum + p.amount, 0)
+    /**
+     * 所有折抵金額總和
+     */
+    totalPromoDiscount() {
+      return this.promoDiscounts
+        .reduce((sum, d) => sum + (d.amount || 0), 0)
     }
-  },
-
-  actions: {
-    // 如果未來有需要從後端抓活動，也可以寫 fetchPromotions()
   }
 })

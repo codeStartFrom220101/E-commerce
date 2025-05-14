@@ -40,7 +40,7 @@ const props = defineProps({
 
 <style scoped lang="scss">
 .checkout-breadcrumbs {
-  padding: 16px;
+  padding: 32px 16px;
 
   .step-icons {
     display: grid;

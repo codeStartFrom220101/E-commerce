@@ -12,56 +12,66 @@
           @updateQty="updateQuantity"
         />
         <!-- 已使用優惠 -->
-        <div class="discounts">
+        <div v-if="promos.length" class="discounts">
           <p>已享用之優惠</p>
           <ul>
-            <li v-for="p in promos" :key="p.id">
-              {{ p.name }} -NT$ {{ p.amount }}
+            <li v-for="d in promos" :key="d.id">
+              <div class="tag">限時優惠</div>
+              <div class="discount">
+                <span>{{ d.name }}</span> <span class="amount">- NT$ {{ d.amount }}</span>
+              </div>
             </li>
           </ul>
+          <p>折抵總額：-NT$ {{ totalDiscount }}</p>
+        </div>
+
+      </FrameContainer>
+
+      <FrameContainer>
+        <template #header>
+          加購專區
+        </template>
+
+        <!-- 水平滾動容器 -->
+        <div class="add-ons-wrapper">
+          <AddOnCard
+            v-for="item in addOnItems"
+            :key="item.id"
+            :image="item.image"
+            :title="item.name"
+            :originalPrice="item.price"
+            :discountedPrice="item.price - 5"
+          />
         </div>
       </FrameContainer>
 
-    <div class="additional-purchase">
-      <h3>加購專區 (左右滑動)</h3>
-      <SwipeList :items="recommendedItems" />
-    </div>
-
     <div class="shipping-payment">
       <h3>選擇送貨及付款方式</h3>
-      <FormSelect v-model="form.region" :options="regions" label="配送地點" />
+      <!-- <FormSelect v-model="form.region" :options="regions" label="配送地點" />
       <FormSelect v-model="form.shipping" :options="shippings" label="送貨方式" />
-      <FormSelect v-model="form.payment" :options="payments" label="付款方式" />
+      <FormSelect v-model="form.payment" :options="payments" label="付款方式" /> -->
       <p class="note">*若使用超商取貨，需額外收取 40 元手續費</p>
     </div>
 
-    <div class="order-info">
-      <h3>訂單資訊</h3>
-      <p>小計: NT$ {{ subtotal }}</p>
-      <p>運費: {{ shippingFeeText }}</p>
-      <p>活動折扣: -NT$ {{ discountTotal }}</p>
-      <p class="total">合計: NT$ {{ total }}</p>
-      <RouterLink to="/checkout/step2" class="next-btn">前往結帳</RouterLink>
-    </div>
   </div>
 </template>
 
 <script setup>
-import { computed, reactive } from 'vue'
+import { ref, computed, reactive, onMounted } from 'vue'
 import { useCartStore } from '@/stores/cartStore'
 // import SwipeList from '@/components/SwipeList.vue'
 // import FormSelect from '@/components/FormSelect.vue'
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 import FrameContainer from '@/components/FrameContainer.vue'
 import CartItemRow from '@/components/CartItemRow.vue'
+import AddOnCard from '@/components/AddOnCard.vue'
 
 // 活動判定 
 import { usePromotionStore } from '@/stores/promotionStore'
-const promoStore = usePromotionStore()
+import { useProductStore } from '@/stores/productStore'
 
-// 活動清單
-const promos = computed(() => promoStore.promotionDiscounts)
-console.log(promos);
+const promoStore = usePromotionStore()
+const promos = computed(() => promoStore.promoDiscounts)
 
 // 總折抵
 const totalDiscount = computed(() => promoStore.totalPromoDiscount)
@@ -70,9 +80,6 @@ const cartStore = useCartStore()
 const cartItems = computed(() => cartStore.items)
 const totalItems = computed(() => cartStore.items.reduce((sum, i) => sum + i.quantity, 0))
 const subtotal = computed(() => cartStore.items.reduce((sum, i) => sum + i.quantity * i.price, 0))
-
-// 加購推薦
-const recommendedItems = computed(() => cartStore.recommendations)
 
 // 表單選項
 const regions = ['台灣']
@@ -107,10 +114,77 @@ function updateQuantity({ id, delta, quantity }) {
 
   cartStore.updateQuantity({ id, quantity: newQty })
 }
+
+// 加購專區
+
+
+const productStore = useProductStore()
+const addOnItems = ref([])
+
+onMounted(async () => {
+  // 如果你是从 API 拿 products，需要先 fetch
+  if (!productStore.products.length && productStore.fetchProducts) {
+    await productStore.fetchProducts()
+  }
+  // 拿排除购物车商品后的随机5件
+  addOnItems.value = productStore.randomAddOns
+    // 或 productStore.randomAddOns 如果是 getter
+})
 </script>
 
 <style scoped lang="scss">
-  .discount {
+  .discounts {
+    padding: 8px 16px;
+    color: #000;
+
+    p {
+      font-size: 10px; 
+      margin-bottom: 4px;
+    }
+
+    ul {
+
+      li {
+        font-size: 10px;
+        margin-bottom: 4px;
+        
+        .tag {
+          background: $color-primary;
+          color: $color-light-text;
+          padding: 0px 10px;
+          width: 100px;
+          border-radius: 16px;
+          font-size: 8px;
+          text-align: center;
+          margin-bottom: 4px;
+        }
+
+        .discount {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .amount {
+            color: #C9154A;
+            font-weight: bold;
+          }
+        }
+      }
+    }
 
   }
+
+  .add-ons-wrapper {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 16px 0;
+
+  /* 隱藏原生滾動條（可選） */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
 </style>

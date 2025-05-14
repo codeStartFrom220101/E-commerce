@@ -1,5 +1,6 @@
 // src/stores/productStore.js
 import { defineStore } from 'pinia'
+import { useCartStore } from './cartStore'
 
 export const useProductStore = defineStore('productStore', {
   state: () => ({
@@ -76,5 +77,20 @@ export const useProductStore = defineStore('productStore', {
       const shuffled = [...candidates].sort(() => Math.random() - 0.5)
       return shuffled.slice(0, 4)
     },
+
+    /**
+     * 加購商品
+     * 排除購物車已有商品
+     */
+    randomAddOns() {
+      const cartStore = useCartStore()
+      // 先取出购物车里所有的商品 id
+      const cartIds = cartStore.items.map(i => i.id)
+      // 过滤掉购物车里的，再打乱、取前 5
+      const candidates = this.products.filter(p => !cartIds.includes(p.id))
+      return [...candidates]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 5)
+    }
   }
 })

@@ -21,7 +21,7 @@
            @click="$emit('remove', item.id)"
            aria-label="移除商品"
          >
-           ✕
+          <font-awesome-icon :icon="['fas', 'xmark']" />
          </button>
      
          <!-- 單價  -->
@@ -39,7 +39,7 @@
           :disabled="item.quantity <= 1"
           aria-label="減少數量"
         >
-          -
+          <font-awesome-icon :icon="['fa', 'minus']" />
         </button>
         <input
           type="number"
@@ -52,7 +52,7 @@
           @click="$emit('updateQty', { id: item.id, delta: 1 })"
           aria-label="增加數量"
         >
-          +
+          <font-awesome-icon :icon="['fa', 'plus']" />
         </button>
       </div>
   
@@ -107,8 +107,8 @@ function onQtyChange() {
 
     .thumbnail {
       flex: 0 1 auto;
-      width: 80px;
-      height: 80px;
+      width: 60px;
+      height: 60px;
       object-fit: cover;
       border-radius: 4px;
     }
@@ -134,13 +134,14 @@ function onQtyChange() {
       .remove-btn {
         background: none;
         border: none;
-        font-size: 16px;
+        font-size: 12px;
+        font-weight: bold;
         color: $color-text;
         cursor: pointer;
       }
     
       .unit-price {
-        font-size: 16px;
+        font-size: 10px;
         font-weight: bold;
       }
     }
@@ -148,13 +149,13 @@ function onQtyChange() {
 
   .section2 {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     width: 100%;
 
     .quantity-control {
       display: flex;
       align-items: center;
-      font-weight: bold;
 
       button {
         width: 24px;
@@ -162,7 +163,15 @@ function onQtyChange() {
         border: 1px solid $color-border;
         background: none;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 12px;
+
+        &:nth-of-type(1) {
+          border-radius: 3px 0 0 3px;
+        }
+
+        &:nth-of-type(2) {
+          border-radius: 0 3px 3px 0;
+        }
       }
 
       input {
@@ -172,12 +181,12 @@ function onQtyChange() {
         border: none;
         border-top: 1px solid $color-border;
         border-bottom: 1px solid $color-border;
-        font-size: 12px;
+        font-size: 10px;
       }
     }
   
     .line-total {
-      font-size: 16px;
+      font-size: 10px;
       font-weight: bold;
     }
   }
