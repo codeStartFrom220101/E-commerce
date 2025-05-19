@@ -59,7 +59,7 @@
         送貨資料 <span class="fee">運費：{{ shippingFeeText }}</span>
       </template>
       <div class="shipping-methods">
-        已選用物流方式:新竹物流
+        已選用物流方式: {{ form.shippingMethod }}
       </div>
       <label class="checkbox">
         <input type="checkbox" name="" id="same-person">
@@ -77,27 +77,24 @@
         type="tel"
       />
       <div class="address-select">
-        <FormSelect
-          v-model="form.region"
-          :options="regionOptions"
-          defaultLabel="縣市"
-        />
-        <FormSelect
-          v-model="form.city"
-          :options="cityOptions"
-          defaultLabel="鄉鎮"
-        />
-        <FormSelect
-          v-model="form.district"
-          :options="districtOptions"
-          defaultLabel="村里"
+        <h6>地址</h6>
+        <div class="grid-2">
+          <FormSelect
+            v-model="form.region"
+            :options="regionOptions"
+            defaultLabel="縣市"
+          />
+          <FormSelect
+            v-model="form.city"
+            :options="cityOptions"
+            defaultLabel="鄉鎮"
+          />
+        </div>
+        <FormInput
+          v-model="form.address"
+            placeholder="請輸入地址"
         />
       </div>
-      <FormInput
-        v-model="form.address"
-        label="地址"
-        placeholder="請輸入地址"
-      />
       <label class="checkbox">
         <input type="checkbox" v-model="form.saveAddress" />
         儲存為預設收貨地址
@@ -169,18 +166,19 @@
 </template>
 
 <script setup>
-import { reactive, computed } from 'vue'
+import { ref, watch, reactive, computed } from 'vue'
 import FrameContainer from '@/components/FrameContainer.vue'
 import FormInput from '@/components/FormInput.vue'
 import FormSelect from '@/components/FormSelect.vue'
 import OrderSummary from '@/components/OrderSummary.vue'
 import { useCheckoutStore }  from '@/stores/checkoutStore'
 
-const store = useCheckoutStore()
+
+const checkoutStore = useCheckoutStore()
 
 // 金額計算
-const shippingFeeText = computed(() => store.shippingFeeText)
-const total            = computed(() => store.total)
+const shippingFeeText = computed(() => checkoutStore.shippingFeeText)
+const total            = computed(() => checkoutStore.total)
 
 // 表單資料 & 選項
 const form = reactive({
@@ -191,19 +189,28 @@ const form = reactive({
   birthYear:       '',
   birthMonth:      '',
   birthDay:        '',
-  shippingMethod:  '',
+  region:          checkoutStore.region,          // ← 从 store 拿
+  shippingMethod:  checkoutStore.shippingMethod,  // ← 从 store 拿
+  paymentMethod:   checkoutStore.paymentMethod,   // ← 从 store 拿
   recipientName:   '',
   recipientPhone:  '',
-  region:          '',
   city:            '',
   district:        '',
   address:         '',
   saveAddress:     false,
-  paymentMethod:   '',
   invoiceType:     '',
   invoiceMethod:   '',
   orderNote:       '',
   agreeTerms:      false
+})
+
+// 如果勾「同顧客資料」，就把 customerName/email/phone 复制过来
+const sameAsCustomer = ref(false)
+watch(sameAsCustomer, val => {
+  if (val) {
+    form.recipientName  = form.customerName
+    form.recipientPhone = form.phone
+  }
 })
 
 const genderOptions = [
@@ -218,7 +225,6 @@ const monthOptions     = Array.from({ length: 12 }, (_, i) => ({ label: `${i+1}`
 const dayOptions       = Array.from({ length: 31 }, (_, i) => ({ label: `${i+1}`, value: i+1 }))
 const regionOptions    = [{ label: '台灣', value: 'TW' }, { label: '香港', value: 'HK' }]
 const cityOptions      = [{ label: '新竹市', value: 'Hsinchu' }, { label: '台北市', value: 'Taipei' }]
-const districtOptions  = [{ label: '東區', value: 'east' }, { label: '西區', value: 'west' }]
 
 const paymentOptions = [
   { label: 'Line Pay', value: 'linepay' },
@@ -265,8 +271,26 @@ function submitOrder() {
 }
 
 .address-select {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat;
+  grid-auto-rows: auto;
   gap: 8px;
+
+
+  h6 {
+    font-size: 14px;
+    grid-column: 1 / -1;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+
+
+
 }
 
 .shipping-methods {
@@ -343,4 +367,6 @@ textarea {
     background: color.adjust($color-primary, $lightness: -10%);
   }
 }
+
+
 </style>

@@ -165,22 +165,22 @@ const regionOptions = [
 ]
 
 const shippingOptions = [
-  { label: '新竹物流', value: 'hct' },
-  { label: '全家超商', value: 'cvs' },
-  { label: '宅配到府', value: 'home' }
+  { label: '新竹物流', value: '新竹物流' },
+  { label: '全家超商', value: '全家超商' },
+  { label: '宅配到府', value: '宅配到府' }
 ]
 
 const paymentOptions = [
-  { label: 'Line Pay', value: 'linepay' },
-  { label: '信用卡', value: 'creditcard' },
-  { label: '貨到付款', value: 'cod' }
+  { label: 'Line Pay', value: 'Line Pay' },
+  { label: '信用卡', value: '信用卡' },
+  { label: '貨到付款', value: '貨到付款' }
 ]
 
 // 2. 用 reactive 建立 form model，並指定預設值
 const form = reactive({
-  region:   "",    // 預設 "台灣"
-  shipping: "",  // 預設 "hct"
-  payment:  ""    // 預設 "linepay"
+  region:   "",
+  shipping: "",
+  payment:  ""
 })
 
 
@@ -223,7 +223,7 @@ function updateQuantity({ id, delta, quantity }) {
   padding-top: 16px;
 
   p {
-    font-size: 10px; 
+    font-size: 10px;
     margin-bottom: 4px;
   }
 
