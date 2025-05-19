@@ -1,15 +1,13 @@
 <template>
-  <div class="add-on-card">
+  <div class="add-on-card" @click="onSelect">
     <img :src="image" :alt="title" />
-
     <div class="info">
       <h4 class="title">{{ title }}</h4>
       <p class="price">
-        <span class="original">＄{{ originalPrice }} TWD</span>
-        <span class="discounted">＄{{ discountedPrice }} TWD</span>
+        <span class="original">NT$ {{ originalPrice }}</span>
+        <span class="discounted">NT$ {{ discountedPrice }}</span>
       </p>
     </div>
-
     <div v-if="locked" class="lock-overlay">
       <font-awesome-icon :icon="['fas','lock']" />
     </div>
@@ -17,13 +15,26 @@
 </template>
 
 <script setup>
-defineProps({
+import { defineEmits, defineProps } from 'vue'
+
+const props = defineProps({
+  item: { type: Object, required: true },           // 整个 item
   image: { type: String, required: true },
   title: { type: String, required: true },
   originalPrice: { type: [String, Number], required: true },
   discountedPrice: { type: [String, Number], required: true },
   locked: { type: Boolean, default: false }
 })
+
+const emit = defineEmits(['select'])
+
+// 點擊卡片才觸發
+function onSelect() {
+  
+  // 如果 disabled（locked）就不觸發
+  if (props.locked) return
+  emit('select', props.item)
+}
 </script>
 
 <style scoped lang="scss">

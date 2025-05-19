@@ -82,15 +82,19 @@ export const useProductStore = defineStore('productStore', {
      * 加購商品
      * 排除購物車已有商品
      */
-    randomAddOns() {
-      const cartStore = useCartStore()
-      // 先取出购物车里所有的商品 id
-      const cartIds = cartStore.items.map(i => i.id)
-      // 过滤掉购物车里的，再打乱、取前 5
-      const candidates = this.products.filter(p => !cartIds.includes(p.id))
-      return [...candidates]
+    randomAddOns(state) {
+      const cartIds = useCartStore().items.map(i => i.id)
+      // 先过滤出不在购物车里的，再打乱
+      const candidates = state.products
+        .filter(p => !cartIds.includes(p.id))
         .sort(() => Math.random() - 0.5)
         .slice(0, 5)
+
+      // 在这里给每项加一个 discountedPrice = price - 5
+      return candidates.map(p => ({
+        ...p,
+        discountedPrice: p.price - 5
+      }))
     }
   }
 })
