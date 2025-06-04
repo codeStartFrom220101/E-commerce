@@ -112,6 +112,10 @@ onUnmounted(() => {
   height: 375px;
   overflow: hidden;
 
+  @include respond-lg {
+    height: 100vh;
+  }
+
   .slide {
     position: absolute;
     inset: 0;

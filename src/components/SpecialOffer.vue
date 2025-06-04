@@ -35,6 +35,17 @@ const products = [
     background: url('/images/offer-bg.png') no-repeat center/cover;
     height: 260px;
 
+    
+
+    @include respond-sm {
+      height: 350px;
+    }
+
+    @include respond-lg {
+      height: 600px;
+    }
+
+
     h4 {
       position: absolute;
       top: 40%;
@@ -43,6 +54,10 @@ const products = [
       letter-spacing: 1px;
       font-size: 20px;
       color: $color-light-text;
+
+      @include respond-sm {
+        font-size: 32px;
+      }
       
       >span {
         font-weight: 500;
@@ -50,6 +65,10 @@ const products = [
         &:first-child {
           font-weight: normal;
           font-size: 12px;
+
+          @include respond-sm {
+            font-size: 20px;
+          }
         }
 
         &:last-child {
@@ -59,7 +78,7 @@ const products = [
         >span {
           font-size: 32px;
         }
-    }
+      }
     }
   }
   
@@ -68,6 +87,15 @@ const products = [
     background: $color-secondary;
     display: flex;
     flex-direction: column;
+
+    
+    @include respond-sm {
+      height: 350px;
+    }
+
+    @include respond-xl {
+      height: 600px;
+    }
 
     .product-showcase {
       display: flex;
@@ -78,18 +106,38 @@ const products = [
       border-radius: 12px;
       place-self: center;
       transform: translateY(-30%);
+
+      @include respond-sm {
+        width: 600px;
+      }
+
+      @include respond-xl {
+        width: 1200px;
+      }
   
       .product {
         display: flex;
         justify-content: space-between;
         flex-direction: column;
         width: 80px;
+
+        @include respond-sm {
+          width: 150px;
+        }
+
+        @include respond-xl {
+          width: 300px;
+        }
           
         .name {
           font-size: 8px;
           text-align: center;
           margin-bottom: 6px;
           color: $color-text;
+
+          @include respond-sm {
+            font-size: 16px;
+          }
         }
         
         img {
@@ -98,6 +146,16 @@ const products = [
           object-fit: cover;
           border-radius: 6px;
           margin-bottom: 6px;
+
+          @include respond-sm {
+            width: 150px;
+            height: 150px;
+          }
+
+          @include respond-xl {
+            width: 300px;
+            height: 300px;
+          }
         }
   
         .price {
@@ -106,6 +164,10 @@ const products = [
           font-weight: bold;
           margin-top: 2px;
           color: $color-dark;
+
+          @include respond-sm {
+            font-size: 16px;
+          }
         }
       }
     }

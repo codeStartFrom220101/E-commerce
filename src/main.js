@@ -9,11 +9,12 @@ import { createPinia } from 'pinia'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // 只需在此处 import icon，不要在组件里重复
-import { faMinus, faPlus, faChevronUp, faChevronDown, faTrashAlt, faMagnifyingGlass, faUser, faBagShopping, faBars, faCaretRight, faCaretLeft, faCrown, faMedal, faXmark} from '@fortawesome/free-solid-svg-icons'
+import { faMinus, faPlus, faChevronUp, faChevronDown, faTrashAlt, faMagnifyingGlass, faUser, faBagShopping, faBars, faCaretRight, faCaretLeft, faCrown, faMedal, faXmark, faCircleCheck} from '@fortawesome/free-solid-svg-icons'
 import { faFacebook, faLine, faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faCreditCard } from '@fortawesome/free-regular-svg-icons'
 
 // 把你要用到的 icon 全部加进 library
-library.add(faMinus, faPlus, faFacebook, faLine, faInstagram, faChevronUp, faChevronDown, faTrashAlt, faMagnifyingGlass, faUser, faBagShopping, faBars, faCaretRight, faCaretLeft, faCrown, faMedal, faXmark)
+library.add(faMinus, faPlus, faFacebook, faLine, faInstagram, faChevronUp, faChevronDown, faTrashAlt, faMagnifyingGlass, faUser, faBagShopping, faBars, faCaretRight, faCaretLeft, faCrown, faMedal, faXmark, faCreditCard, faCircleCheck)
 
 const app = createApp(App)
 app.use(createPinia())

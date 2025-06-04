@@ -56,10 +56,18 @@ import SpecialOffer from '@/components/SpecialOffer.vue'
 
 import { useProductStore } from '@/stores/productStore'
 import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
 
 // 取得 Pinia 資料
 const productStore = useProductStore()
 const { newArrivals, bestsellers } = storeToRefs(productStore)
+
+
+onMounted(async () => {
+  if (!productStore.products.length) {
+    await productStore.fetchProducts()
+  }
+})
 
 </script>
 
@@ -79,6 +87,8 @@ const { newArrivals, bestsellers } = storeToRefs(productStore)
 // 新品上市區塊
 .new-arrivals {
   padding: 32px 16px 0 16px;
+  margin: 0 auto;
+  max-width: 1024px;
 
   .product-grid {
     margin-top: 16px;
@@ -86,11 +96,7 @@ const { newArrivals, bestsellers } = storeToRefs(productStore)
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
 
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    @media (min-width: 1024px) {
+    @include respond-sm {
       grid-template-columns: repeat(4, 1fr);
     }
   }
@@ -100,6 +106,11 @@ const { newArrivals, bestsellers } = storeToRefs(productStore)
 // 熱銷排行榜
 .bestseller {
   padding: 32px 16px 0 16px;
+
+    @include respond-lg {
+      max-width: 1000px;
+      border: 1px solid #000;
+    }
 }
 
 
@@ -111,6 +122,11 @@ const { newArrivals, bestsellers } = storeToRefs(productStore)
   font-size: 20px;
   font-weight: bold;
   color: $color-text;
+
+  @include respond-lg {
+    font-size: 32px;
+    padding: 24px 0;
+  }
 
   .highlight {
     color: #EE5555;

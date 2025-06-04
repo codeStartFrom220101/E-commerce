@@ -14,17 +14,17 @@
         <span class="variant">| {{ item.variant }} {{ `${item.isAddOn ? '加購商品' : ''}` }}</span>
       </div>
   
-      <!-- 刪除按鈕 -->
-       <div class="mobile-block">
+      <!-- 刪除按鈕及單價 -->
+       <div class="mobile-block" :class="{ 'step2': !editable }">
          <button
            class="remove-btn"
            @click="$emit('remove', item.id)"
            aria-label="移除商品"
+           v-if="editable"
          >
           <font-awesome-icon :icon="['fas', 'xmark']" />
          </button>
      
-         <!-- 單價  -->
          <div class="unit-price">
            NT$ {{ item.price }}
          </div>
@@ -32,17 +32,17 @@
     </div>
 
     <div class="section2">
-      <!-- 數量控制  -->
+      <!-- 數量顯示或控制  -->
       <div class="quantity-container">
         <div class="quantity-fig">數量:</div>
-        <div v-if="item.isAddOn">1</div>
-        <div class="quantity-control" v-else>
+        <!-- 如果可編輯 (step1) 顯示控制器，否則顯示靜態數字 -->
+        <div v-if="editable && !item.isAddOn" class="quantity-control">
           <button
             @click="$emit('updateQty', { id: item.id, delta: -1 })"
             :disabled="item.quantity <= 1"
             aria-label="減少數量"
           >
-            <font-awesome-icon :icon="['fa', 'minus']" />
+            <font-awesome-icon :icon="['fas', 'minus']" />
           </button>
           <input
             type="number"
@@ -55,9 +55,10 @@
             @click="$emit('updateQty', { id: item.id, delta: 1 })"
             aria-label="增加數量"
           >
-            <font-awesome-icon :icon="['fa', 'plus']" />
+            <font-awesome-icon :icon="['fas', 'plus']" />
           </button>
         </div>
+        <div v-else class="quantity-static">{{ item.quantity }}</div>
       </div>
   
       <!-- 小計  -->
@@ -75,6 +76,11 @@ const props = defineProps({
   item: {
     type: Object,
     required: true
+  },
+  // editable: true for Step1 (quantity control), false for Step2 (static)
+  editable: {
+    type: Boolean,
+    default: true
   }
 })
 const emit = defineEmits(['remove', 'updateQty'])
@@ -86,7 +92,6 @@ watch(
   (q) => { localQty.value = q }
 )
 function onQtyChange() {
-  // 若使用者直接輸入數量，發出更新事件
   emit('updateQty', { id: props.item.id, quantity: localQty.value })
 }
 </script>
@@ -102,6 +107,11 @@ function onQtyChange() {
   border-bottom: 0.5px solid vars.$color-border;
   padding: 16px 0;
   font-size: 10px;
+
+  &:nth-child(1) {
+    padding-top: 0;
+  }
+  
 
   .section1 {
     display: flex;
@@ -135,12 +145,16 @@ function onQtyChange() {
       justify-content: space-between;
       align-items: end;
 
+      &.step2 {
+        justify-content: end;
+      }
+
       .remove-btn {
         background: none;
         border: none;
         font-size: 12px;
         font-weight: bold;
-        color: $color-text;
+        color: vars.$color-text;
         cursor: pointer;
       }
     
@@ -157,10 +171,15 @@ function onQtyChange() {
     justify-content: space-between;
     width: 100%;
 
-
     .quantity-container {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
 
-      
+      .quantity-fig {
+        width: 100%;
+      }
+
       .quantity-control {
         display: flex;
         align-items: center;
@@ -168,7 +187,7 @@ function onQtyChange() {
         button {
           width: 24px;
           height: 24px;
-          border: 1px solid $color-border;
+          border: 1px solid vars.$color-border;
           background: none;
           cursor: pointer;
           font-size: 12px;
@@ -187,10 +206,15 @@ function onQtyChange() {
           height: 24px;
           text-align: center;
           border: none;
-          border-top: 1px solid $color-border;
-          border-bottom: 1px solid $color-border;
+          border-top: 1px solid vars.$color-border;
+          border-bottom: 1px solid vars.$color-border;
           font-size: 10px;
         }
+      }
+
+      .quantity-static {
+        font-size: 10px;
+        font-weight: bold;
       }
     }
   
@@ -199,7 +223,5 @@ function onQtyChange() {
       font-weight: bold;
     }
   }
-
-
 }
 </style>

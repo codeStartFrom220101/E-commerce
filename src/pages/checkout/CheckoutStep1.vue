@@ -1,16 +1,18 @@
 <template>
   <div class="checkout-step1">
+      <!-- 購物車 -->
       <FrameContainer>
         <template #header>
-          購物車 ({{ totalItems }} 件)
+          購物車 ({{ cartItems.length }} 件)
         </template>
         <CartItemRow
-          v-for="item in cartItems"
-          :key="item.id"
-          :item="item"
-          @remove="removeItem"
-          @updateQty="updateQuantity"
-        />
+        v-for="item in cartItems"
+        :key="item.id"
+        :item="item"
+        :editable="true"
+        @remove="removeItem"
+        @updateQty="updateQuantity"
+      />
         <!-- 已使用優惠 -->
         <div v-if="promos.length" class="discounts">
           <p>已享用之優惠</p>
@@ -87,6 +89,7 @@
       :region="form.region"
       :shipping="form.shipping"
       :payment="form.payment"
+      @proceed="goToStep2"
   />
 
 
@@ -95,31 +98,48 @@
 
 <script setup>
 import { ref, computed, reactive, onMounted } from 'vue'
-import { useCartStore } from '@/stores/cartStore'
-// import SwipeList from '@/components/SwipeList.vue'
 import FormSelect from '@/components/FormSelect.vue'
 import OrderSummary from '@/components/OrderSummary.vue'
-// import FormInput from '@/components/FormInput.vue'
 import FrameContainer from '@/components/FrameContainer.vue'
 import CartItemRow from '@/components/CartItemRow.vue'
 import AddOnCard from '@/components/AddOnCard.vue'
+import { useRouter } from 'vue-router'
+
 
 // 活動判定 
 import { usePromotionStore } from '@/stores/promotionStore'
 import { useProductStore } from '@/stores/productStore'
-import { useCheckoutStore }   from '@/stores/checkoutStore'
+import { useCartStore } from '@/stores/cartStore'
+import { useCheckoutStore } from '@/stores/checkoutStore'
 
+const router        = useRouter()
+const cartStore     = useCartStore()
+const checkoutStore = useCheckoutStore()
 const promoStore = usePromotionStore()
 const promos = computed(() => promoStore.promoDiscounts)
 
 // 總折抵
 const totalDiscount = computed(() => promoStore.totalPromoDiscount)
 
-const checkoutStore = useCheckoutStore()
-const cartStore = useCartStore()
-const cartItems = computed(() => cartStore.items)
-const totalItems = computed(() => cartStore.items.reduce((sum, i) => sum + i.quantity, 0))
-const subtotal = computed(() => cartStore.items.reduce((sum, i) => sum + i.quantity * i.price, 0))
+
+
+// 初始化資料
+onMounted(() => {
+  checkoutStore.initStep1({
+    items:        cartStore.items,
+    addOnItems:   addOnItems.value,      // 如果有加购
+    region:       form.region,
+    shippingMethod: form.shipping,
+    paymentMethod:  form.payment
+  })
+})
+
+// 購物車
+const cartItems = computed(() => checkoutStore.items)
+// 商品總額
+const subtotal = computed(() =>
+  checkoutStore.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+)
 
 
 // 加購專區
@@ -134,27 +154,12 @@ const addOnItems = ref([])
    }
   // 2) 只执行一次——拿初始随机并排除购物车已有，然后写入 ref
   addOnItems.value = productStore.randomAddOns.filter(
-    p => !cartStore.items.some(i => i.id === p.id)
+    p => !checkoutStore.items.some(i => i.id === p.id)
   )
 })
 
 function addOneAddOn(item) {
-  console.log('item', item);
-  
-  // 移除先前的加購
-  cartStore.items
-    .filter(i => i.isAddOn)
-    .forEach(i => cartStore.removeItem(i.id))
-
-  // 加入這一件，加購一定只有 quantity=1
-  cartStore.addItem({
-    id:        item.id,
-    name:      item.name,
-    image:     item.image,
-    price:     item.discountedPrice,
-    quantity:  1,
-    isAddOn:   true
-  })
+  checkoutStore.addAddOn(item)
 }
 
 // 表單選項
@@ -200,12 +205,12 @@ const discountTotal = computed(() => 10) // 提示寫死或視優惠邏輯而定
 const total = computed(() => subtotal.value + shippingFee.value - discountTotal.value)
 
 function removeItem(id) {
-  cartStore.removeItem(id)
+  checkoutStore.removeItem(id)
 }
 
 // 新增 updateQuantity（或你模板里叫 @updateQty 的名字）
 function updateQuantity({ id, delta, quantity }) {
-  const found = cartStore.items.find(i => i.id === id)
+  const found = checkoutStore.items.find(i => i.id === id)
   if (!found) return
 
   // 用 delta 來調整
@@ -213,7 +218,24 @@ function updateQuantity({ id, delta, quantity }) {
     ? quantity
     : Math.max(1, found.quantity + delta)
 
-  cartStore.updateQuantity({ id, quantity: newQty })
+  checkoutStore.updateQuantity({ id, quantity: newQty })
+}
+
+// 4. 蒐集資料及畫面跳轉
+function goToStep2() {
+
+  // 地址 付款方式 寫入checkoutStore
+  checkoutStore.initStep1({
+    items:      cartStore.items,
+    addOnItems: [],           // 或者之前选好的加购
+    region:     form.region,
+    shippingMethod: form.shipping,
+    paymentMethod:  form.payment
+  })
+
+
+  // 跳轉到第二步驟
+  router.push({ name: 'CheckoutStep2' })
 }
 </script>
 

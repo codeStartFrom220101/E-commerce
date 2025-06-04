@@ -38,6 +38,18 @@ const formattedTitle = computed(() => {
   justify-content: flex-end;
   padding: 24px;
 
+  @include respond-sm {
+    height: 350px;
+  }
+
+  @include respond-lg {
+    height: 600px;
+  }
+
+  @include respond-xxl {
+    height: 100vh;
+  }
+
   .content {
     margin-top: 20px;
     text-align: right;

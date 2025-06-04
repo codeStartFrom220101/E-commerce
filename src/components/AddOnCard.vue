@@ -30,6 +30,7 @@ const emit = defineEmits(['select'])
 
 // 點擊卡片才觸發
 function onSelect() {
+  console.log('onSelect');
   
   // 如果 disabled（locked）就不觸發
   if (props.locked) return

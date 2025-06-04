@@ -4,7 +4,7 @@
     <template #header>訂單資訊</template>
     <div class="order-info">
       <div class="row"><span>小計：</span><span>NT$ {{ subtotal }}</span></div>
-      <div class="row"><span>運費：</span><span>{{ shippingFeeText }}</span></div>
+      <div class="row"><span>運費：</span><span>NT$ 60</span></div>
       <div class="row">
         <span>活動折扣：</span>
         <span class="discount">- NT$ {{ totalDiscount }}</span>
@@ -22,7 +22,7 @@
       <button
         class="checkout-btn"
         :disabled="!props.canProceed || !hasItems"
-        @click="goToStep2"
+        @click="$emit('proceed')"
       >
         前往結帳
       </button>
@@ -33,7 +33,6 @@
 <script setup>
 import { computed } from 'vue'
 import { defineProps } from 'vue'
-import { useRouter } from 'vue-router'
 import { useCartStore } from '@/stores/cartStore'
 import { usePromotionStore } from '@/stores/promotionStore'
 import { useCheckoutStore } from '@/stores/checkoutStore'
@@ -47,7 +46,6 @@ const props = defineProps({
   payment:         String
 })
 
-const router    = useRouter()
 const cartStore = useCartStore()
 const promoStore = usePromotionStore()
 const checkoutStore = useCheckoutStore()
@@ -75,22 +73,8 @@ const total = computed(() =>
 // 3. 在購物車沒商品時disabled
 const hasItems = computed(() => cartStore.items.length > 0)
 
-// 4. 点击按钮才会跳转
-function goToStep2() {
-  console.log(props.canProceed);
-  
-  if (!props.canProceed || !hasItems.value) return
 
-  // 地址 付款方式 寫入checkoutStore
-  checkoutStore.setStep1Data({
-    region:   props.region,
-    shipping: props.shipping,
-    payment:  props.payment
-  })
 
-  // 跳轉到第二步驟
-  router.push({ name: 'CheckoutStep2' })
-}
 </script>
 
 <style scoped lang="scss">
@@ -160,4 +144,5 @@ function goToStep2() {
     }
   }
 }
+
 </style>

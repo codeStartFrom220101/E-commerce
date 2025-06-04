@@ -1,4 +1,10 @@
-// 主色系
+// --------------------------------------------------
+// 全站變數檔：包含顏色、字型、斷點與 Mixin
+// --------------------------------------------------
+
+// -------------------------------
+// 1. 主色系
+// -------------------------------
 $color-primary: #D9A45F;
 $color-secondary: #B9CBB3;
 $color-dark: #6B4F3B;
@@ -10,7 +16,56 @@ $color-light-text: #F9F6F1;
 // header 顏色
 $color-header-bg: #867F74;
 
+// slider arrow 顏色
 $color-homeSlider-arrow: #b9cbb3;
 
-// 字型
+// -------------------------------
+// 2. 字型
+// -------------------------------
 $font-family-base: 'Noto Sans TC', sans-serif;
+
+// -------------------------------
+// 3. 全站斷點 (Breakpoints)
+// -------------------------------
+// 這些變數只代表螢幕寬度的臨界值
+$breakpoint-sm: 640px; // 小型手機 / 小平板
+$breakpoint-md: 768px; // 中型平板 / 小桌機
+$breakpoint-lg: 1024px; // 桌機一般寬度
+$breakpoint-xl: 1280px; // 寬屏桌機
+$breakpoint-xxl: 1536px; // 超寬螢幕
+
+// -------------------------------
+// 4. Mixin：在 SCSS 中快速套用 media query
+// -------------------------------
+// 用法：@include respond-sm { … } 表示螢幕寬度 ≥ 640px
+//       @include respond-md { … } 表示螢幕寬度 ≥ 768px
+// 以此類推。
+@mixin respond-sm {
+  @media (min-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin respond-md {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin respond-lg {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin respond-xl {
+  @media (min-width: $breakpoint-xl) {
+    @content;
+  }
+}
+
+@mixin respond-xxl {
+  @media (min-width: $breakpoint-xxl) {
+    @content;
+  }
+}

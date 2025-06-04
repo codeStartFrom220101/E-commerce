@@ -21,7 +21,7 @@ export const usePromotionStore = defineStore('promotion', {
         name: '全站滿520免運',
         type: 'freeShipping',
         threshold: 520,
-        shippingFee: 60,
+        shippingFee: 0,
         start: null,
         end: null
       }

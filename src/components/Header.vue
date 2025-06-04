@@ -1,9 +1,12 @@
 <template>
   <header class="header">
-    <div class="logo">Zoo GOODS</div>
+    <router-link :to="{ name: 'Home' }" class="icon-link">
+      <div class="logo">Zoo GOODS</div>
+    </router-link>
     <div class="icons">
-      <font-awesome-icon class="icon" icon="fa-solid fa-magnifying-glass" />
-      <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+      <router-link :to="{ name: 'LoginRegister' }" class="icon-link">
+        <font-awesome-icon class="icon" :icon="['fas','user']" />
+      </router-link>
       <div class="cart-content">
         <font-awesome-icon class="icon" icon="fa-solid fa-bag-shopping" @click="handleCartOpen"/>
         <div class="cart-count">{{ cartStore.items.length }}</div>
@@ -46,6 +49,15 @@ const handleCartOpen = () => {
     font-size: 20px;
     font-weight: bold;
     color: $color-light-text; // 根據你的 UI 顏色
+
+    @include respond-lg {
+      font-size: 32px;
+    }
+  }
+
+  .icon-link {
+    color: $color-light-text;
+    text-decoration: none;
   }
 
   .icons {
