@@ -29,6 +29,10 @@ const currentStep = computed(() => {
 </script>
 
 <style scoped lang="scss">
+.checkout-layout {
+  margin-top: 74px;
+}
+
 .router-layout {
   padding: 0 16px;
 }

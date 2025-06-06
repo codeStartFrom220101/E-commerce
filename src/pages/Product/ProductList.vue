@@ -1,44 +1,62 @@
 <template>
   <div class="product-page">
-    <Breadcrumbs :paths="breadcrumbPaths" />
-    <ProductBanner :title="bannerTitle" :background="bannerImage" />
     
-    <div class="sectionTitle-grid">
-      <SectionTitle :text="sectionTitle"/>
-    </div>
-
-    <div class="dropdown-grid">
-      <CostumSelectDropdown  
-        :options="sortOptions1" 
-        defaultLabel="商品排序"
-        @select="handleSort"
-      />
-      <CostumSelectDropdown  
-        :options="sortOptions2" 
-        defaultLabel="每頁顯示數量"
-        @select="handlePageSize"
-      />
-    </div>
-
-    <div class="product-grid">
-      <ProductCard v-for="item in displayedProducts" :key="item.id" :product="item" />
+    <ProductBanner :title="bannerTitle" :background="bannerImage" />
+    <Breadcrumbs :paths="breadcrumbPaths" />
+    <div class="outside-grid">
+      <nav class="category-nav">
+        <router-link
+          v-for="(label, key) in categoryLabels"
+          :key="key"
+          :to="`/product/${key}`"
+          :class="{ active: category === key }"
+          class="category-link"
+        >
+          {{ label }}
+        </router-link>
+      </nav>
+      <div class="product-block">
+        <div class="top-bar">
+          <div class="sectionTitle-grid">
+            <SectionTitle :text="sectionTitle"/>
+          </div>
+          <div class="dropdown-grid">
+            <CostumSelectDropdown  
+              :options="sortOptions1" 
+              defaultLabel="商品排序"
+              @select="handleSort"
+            />
+            <CostumSelectDropdown  
+              :options="sortOptions2" 
+              defaultLabel="每頁顯示數量"
+              @select="handlePageSize"
+            />
+          </div>
+        </div>
+    
+    
+        <div class="product-grid">
+          <ProductCard v-for="item in displayedProducts" :key="item.id" :product="item" />
+        </div>
+    
+        <div class="custom-pagination">
+          <span @click="prevPage" :class="{ disabled: currentPage === 1 }">‹</span>
+      
+          <span
+            v-for="page in totalPages"
+            :key="page"
+            @click="goToPage(page)"
+            :class="{ active: page === currentPage }"
+          >
+            {{ page }}
+          </span>
+      
+          <span @click="nextPage" :class="{ disabled: currentPage === totalPages }">›</span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="custom-pagination">
-    <span @click="prevPage" :class="{ disabled: currentPage === 1 }">‹</span>
-
-    <span
-      v-for="page in totalPages"
-      :key="page"
-      @click="goToPage(page)"
-      :class="{ active: page === currentPage }"
-    >
-      {{ page }}
-    </span>
-
-    <span @click="nextPage" :class="{ disabled: currentPage === totalPages }">›</span>
-  </div>
 </template>
 
 <script setup>
@@ -168,52 +186,107 @@ const sortOptions2 = [
 </script>
 
 <style scoped lang="scss">
-.sectionTitle-grid {
-  padding: 16px;
-}
 
-.dropdown-grid {
-  display: grid;
-  padding: 0 16px;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
+.outside-grid {
+  @include respond-lg {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+  }
 
-.product-grid {
-  display: grid;
-  padding: 16px;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
+  .category-nav {
+  display: none;
 
-.custom-pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-  margin: 24px 0;
-  font-size: 16px;
-  color: $color-border;
+  @include respond-lg {
+    display: flex;
+    // justify-content: center;
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px 0;
+    background: #f8f8f8;
 
-  span {
-    cursor: pointer;
-    padding: 0 6px;
-    transition: color 0.2s;
-    border-bottom: 2px solid transparent;
-
-    &.active {
-      color: #1f1f1f;
-      font-weight: bold;
-      border-bottom: 2px solid #1f1f1f;
-    }
-
-    &.disabled {
-      opacity: 0.5;
-      cursor: default;
-    }
-
-    &:hover:not(.active):not(.disabled) {
+    .category-link {
       color: #666;
+      font-size: 16px;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #ddd;
+      }
+
+      &.active {
+        background: $color-primary;
+        color: white;
+      }
+    }
+  }
+}
+
+  .top-bar {
+    display: grid;
+  
+    @include respond-sm {
+      grid-template-columns: 1fr 1fr;
+    }
+  
+    .sectionTitle-grid {
+      padding: 16px;
+  
+      @include respond-sm {
+        padding: 16px 16px 0;
+      }
+    }
+    
+    .dropdown-grid {
+      display: grid;
+      padding: 8px 16px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+  }
+  
+  .product-grid {
+    display: grid;
+    padding: 16px;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+
+    @include respond-lg {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .custom-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin: 24px 0;
+    font-size: 16px;
+    color: $color-border;
+  
+    span {
+      cursor: pointer;
+      padding: 0 6px;
+      transition: color 0.2s;
+      border-bottom: 2px solid transparent;
+  
+      &.active {
+        color: #1f1f1f;
+        font-weight: bold;
+        border-bottom: 2px solid #1f1f1f;
+      }
+  
+      &.disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+  
+      &:hover:not(.active):not(.disabled) {
+        color: #666;
+      }
     }
   }
 }

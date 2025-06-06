@@ -52,10 +52,16 @@ const addToCart = () => {
 .card-wrapper {
   position: relative;
     transition: transform 0.2s ease;
+    border-radius: 12px;
+    overflow: hidden;
   
     &:hover {
       transform: translateY(-4px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+      .product-card {
+        border: 1px solid $color-border;
+      }
     }
 
   .medals {
@@ -84,11 +90,11 @@ const addToCart = () => {
     .product-card {
       position: relative;
       background-color: #fff;
-      border: 1px solid $color-border;
       border-radius: 12px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      border: 1px solid $color-border;
     
       .badge {
         position: absolute;

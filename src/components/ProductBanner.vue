@@ -27,6 +27,14 @@ defineProps({
   align-items: center;
   justify-content: center;
 
+  @include respond-sm {
+    height: 50vh;
+  }
+  
+  @include respond-lg {
+    height: 100vh;
+  }
+
   .content {
     position: absolute;
     right: 20px;
