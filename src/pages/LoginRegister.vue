@@ -1,12 +1,14 @@
 <template>
-  <LoginBanner
-    imageUrl="/images/loginBanner.png"
-    :items="[
-      { tag: '限時活動', text: '首次註冊即贈 $30元購物金' },
-      { tag: '限時活動', text: '無須重新註冊點選忘記密碼登入完成送 $100購物金' },
-      { tag: '專屬優惠', text: '端午系列商品單品項9折優惠' }
-    ]"
-  />
+  <div class="banner-grid">
+    <LoginBanner
+      imageUrl="/images/loginBanner.png"
+      :items="[
+        { tag: '限時活動', text: '首次註冊即贈 $30元購物金' },
+        { tag: '限時活動', text: '無須重新註冊點選忘記密碼登入完成送 $100購物金' },
+        { tag: '專屬優惠', text: '端午系列商品單品項9折優惠' }
+      ]"
+    />
+  </div>
   <div class="register-page">
     <div class="tabs">
       <button :class="{ active: mode==='signup' }" @click="mode='signup'">註冊會員</button>
@@ -131,6 +133,10 @@ function onLogin() {
 </script>
 
 <style scoped lang="scss">
+.banner-grid {
+  padding-top: 78px;
+}
+
 .register-page {
   background: white;
   max-width: 400px;

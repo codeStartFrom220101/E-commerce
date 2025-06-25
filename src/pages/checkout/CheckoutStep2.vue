@@ -1,150 +1,151 @@
 <template>
   <div class="checkout-step2">
 
+
     <!-- 2. 訂單資訊小結（可選） -->
-    <FrameContainer>
-      <template #header>訂購商品</template>
-      <!-- 可折疊商品列表 -->
-      <div v-show="toggleState">
-        <CartItemRow
-          v-for="item in cartItems"
-          :key="item.id"
-          :item="item"
-          :editable="false"
-        />
-      </div>
-      <!-- 小計 -->
-      <div class="sub-total" v-if="toggleState">
-        <span>小計：</span><span>NT$ {{ subtotal }}</span>
-      </div>
-      <!-- 運費 -->
-      <div class="shipping-fee" v-if="toggleState">
-        <span>運費：</span><span>NT$ {{ shippingFee }}</span>
-      </div>
-      <!-- 折扣資訊 -->
-      <div class="discount-info" v-if="toggleState && promotions.length">
-        <div v-for="promo in promotions" :key="promo.id" class="promo-item">
-          <span>{{ promo.name }}：</span>
-          <span class="amount">-NT$ {{ promo.amount }}</span>
+    <div class="top-block">
+      <FrameContainer>
+        <template #header>訂購商品</template>
+        <!-- 可折疊商品列表 -->
+        <div v-show="toggleState">
+          <CartItemRow :items="cartItems" :editable="false" />
         </div>
-      </div>
-      <!-- 折後合計 -->
-      <div class="final-total" v-if="toggleState">
-        <span>折後合計：</span>
-        <span class="amount">NT$ {{ subtotal + shippingFee - totalDiscount }}</span>
-      </div>
-      <!-- 展開／收合按鈕 -->
-      <div class="order-toggle" @click="toggleCart">
-        <font-awesome-icon :icon="['fas', toggleState ? 'chevron-up' : 'chevron-down']" />
-      </div>
-    </FrameContainer>
+        <!-- 小計 -->
+        <div class="sub-total" v-if="toggleState">
+          <span>小計：</span><span>NT$ {{ subtotal }}</span>
+        </div>
+        <!-- 運費 -->
+        <div class="shipping-fee" v-if="toggleState">
+          <span>運費：</span><span>NT$ {{ shippingFee }}</span>
+        </div>
+        <!-- 折扣資訊 -->
+        <div class="discount-info" v-if="toggleState && promotions.length">
+          <div v-for="promo in promotions" :key="promo.id" class="promo-item">
+            <span>{{ promo.name }}：</span>
+            <span class="amount">-NT$ {{ promo.amount }}</span>
+          </div>
+        </div>
+        <!-- 折後合計 -->
+        <div class="final-total" v-if="toggleState">
+          <span>折後合計：</span>
+          <span class="amount">NT$ {{ subtotal + shippingFee - totalDiscount }}</span>
+        </div>
+        <!-- 展開／收合按鈕 -->
+        <div class="order-toggle" @click="toggleCart">
+          <font-awesome-icon :icon="['fas', toggleState ? 'chevron-up' : 'chevron-down']" />
+        </div>
+      </FrameContainer>
+    </div>
 
     <!-- 3. 顧客資料 -->
-    <FrameContainer>
-      <template #header>顧客資料</template>
-      <FormInput v-model="form.customerName" label="姓名" placeholder="請輸入姓名" />
-      <FormInput v-model="form.email" label="電子信箱" placeholder="abc@cdefg.com.tw" type="email" />
-      <FormInput v-model="form.phone" label="電話號碼" placeholder="0912345678" type="tel" />
-      <FormSelect v-model="form.gender" label="性別" :options="genderOptions" defaultLabel="請選擇性別" />
-      <div class="birthdate">
-        <h6 class="birth-title">生日日期</h6>
-        <FormSelect v-model="form.birthYear" :options="yearOptions" defaultLabel="年" />
-        <FormSelect v-model="form.birthMonth" :options="monthOptions" defaultLabel="月" />
-        <FormSelect v-model="form.birthDay" :options="dayOptions" defaultLabel="日" />
-      </div>
-    </FrameContainer>
-
-    <!-- 4. 送貨資料 -->
-    <FrameContainer>
-      <template #header>
-        送貨資料 <span class="fee">運費：{{ shippingFeeText }}</span>
-      </template>
-      <div class="shipping-methods">已選用物流方式: {{ form.shippingMethod }}</div>
-      <label class="checkbox">
-        <input type="checkbox" v-model="sameAsCustomer" /> 與顧客資料相同
-      </label>
-      <FormInput v-model="form.recipientName" label="收件人姓名" placeholder="請輸入收件人姓名" />
-      <FormInput v-model="form.recipientPhone" label="收件人電話" placeholder="0912345678" type="tel" />
-      <div class="address-select">
-        <h6>地址</h6>
-        <div class="grid-2">
-          <FormSelect
-            v-model="form.region"
-            :options="regionOptions"
-            defaultLabel="請選擇縣市"
-          />
-          <FormSelect
-            v-model="form.city"
-            :options="cityOptions"
-            defaultLabel="請選擇鄉鎮"
-          />
+    <div class="bottom-block">
+      <FrameContainer>
+        <template #header>顧客資料</template>
+        <FormInput v-model="form.customerName" label="姓名" placeholder="請輸入姓名" />
+        <FormInput v-model="form.email" label="電子信箱" placeholder="abc@cdefg.com.tw" type="email" />
+        <FormInput v-model="form.phone" label="電話號碼" placeholder="0912345678" type="tel" />
+        <FormSelect v-model="form.gender" label="性別" :options="genderOptions" defaultLabel="請選擇性別" />
+        <div class="birthdate">
+          <h6 class="birth-title">生日日期</h6>
+          <FormSelect v-model="form.birthYear" :options="yearOptions" defaultLabel="年" />
+          <FormSelect v-model="form.birthMonth" :options="monthOptions" defaultLabel="月" />
+          <FormSelect v-model="form.birthDay" :options="dayOptions" defaultLabel="日" />
         </div>
-        <FormInput v-model="form.address" placeholder="請輸入地址" />
-      </div>
-      <label class="checkbox">
-        <input type="checkbox" v-model="form.saveAddress" /> 儲存為預設收貨地址
-      </label>
-    </FrameContainer>
-
-    <!-- 5. 付款資料 -->
-    <FrameContainer>
-      <template #header>
-        付款資料 <span class="total">合計：NT$ {{ subtotal + shippingFee - totalDiscount }}</span>
-      </template>
-      <div class="payment-method">
-        <h6>已選用付款方式: {{ form.paymentMethod }}</h6>
-        <div class="payment-placeholder">
-          <font-awesome-icon :icon="['far', 'credit-card']" />
-        </div>
-      </div>
-    </FrameContainer>
-
-    <!-- 6. 發票資訊 -->
-    <FrameContainer>
-      <template #header>索取發票</template>
-      <FormSelect
-        v-model="form.invoiceType"
-        label="發票類型"
-        :options="invoiceTypeOptions"
-        defaultLabel="請選擇發票類型"
-      />
-      <div v-if="form.invoiceType === 'company'">
-        <FormInput v-model="form.companyName" label="公司抬頭" placeholder="請輸入公司抬頭" />
-        <FormInput v-model="form.taxId" label="統一編號" placeholder="請輸入統一編號" type="tel" />
-      </div>
-      <FormSelect
-        v-if="form.invoiceType === 'eInvoice'"
-        v-model="form.invoiceMethod"
-        label="載具類別"
-        :options="invoiceMethodOptions"
-        defaultLabel="請選擇載具"
-      />
-      <FormInput
-        v-if="form.invoiceMethod === 'certificate'"
-        v-model="form.citizenCertificate"
-        label="自然人憑證卡號"
-        placeholder="請輸入憑證卡號"
-      />
-      <FormInput
-        v-if="form.invoiceMethod === 'mobile'"
-        v-model="form.mobileCarrier"
-        label="手機條碼載具"
-        placeholder="請輸入手機條碼"
-      />
-    </FrameContainer>
-
-    <!-- 7. 同意條款 & 完成訂單 -->
-    <FrameContainer>
-      <template #header>
+      </FrameContainer>
+  
+      <!-- 4. 送貨資料 -->
+      <FrameContainer>
+        <template #header>
+          送貨資料 <span class="fee">運費：{{ shippingFeeText }}</span>
+        </template>
+        <div class="shipping-methods">已選用物流方式: {{ form.shippingMethod }}</div>
         <label class="checkbox">
-          <input type="checkbox" v-model="form.agreeTerms" /> 我同意相關
-          <a href="#">服務條款</a> 及 <a href="#">隱私政策</a>
+          <input type="checkbox" v-model="sameAsCustomer" /> 與顧客資料相同
         </label>
-      </template>
-      <button class="complete-btn" :disabled="!form.agreeTerms" @click="submitOrder">
-        完成訂單
-      </button>
-    </FrameContainer>
+        <FormInput v-model="form.recipientName" label="收件人姓名" placeholder="請輸入收件人姓名" />
+        <FormInput v-model="form.recipientPhone" label="收件人電話" placeholder="0912345678" type="tel" />
+        <div class="address-select">
+          <h6>地址</h6>
+          <div class="grid-2">
+            <FormSelect
+              v-model="form.region"
+              :options="regionOptions"
+              defaultLabel="請選擇縣市"
+            />
+            <FormSelect
+              v-model="form.city"
+              :options="cityOptions"
+              defaultLabel="請選擇鄉鎮"
+            />
+          </div>
+          <FormInput v-model="form.address" placeholder="請輸入地址" />
+        </div>
+        <label class="checkbox">
+          <input type="checkbox" v-model="form.saveAddress" /> 儲存為預設收貨地址
+        </label>
+      </FrameContainer>
+  
+      <!-- 5. 付款資料 -->
+      <FrameContainer>
+        <template #header>
+          付款資料 <span class="total">合計：NT$ {{ subtotal + shippingFee - totalDiscount }}</span>
+        </template>
+        <div class="payment-method">
+          <h6>已選用付款方式: {{ form.paymentMethod }}</h6>
+          <div class="payment-placeholder">
+            <font-awesome-icon :icon="['far', 'credit-card']" />
+          </div>
+        </div>
+      </FrameContainer>
+  
+      <!-- 6. 發票資訊 -->
+      <FrameContainer>
+        <template #header>索取發票</template>
+        <FormSelect
+          v-model="form.invoiceType"
+          label="發票類型"
+          :options="invoiceTypeOptions"
+          defaultLabel="請選擇發票類型"
+        />
+        <div v-if="form.invoiceType === 'company'">
+          <FormInput v-model="form.companyName" label="公司抬頭" placeholder="請輸入公司抬頭" />
+          <FormInput v-model="form.taxId" label="統一編號" placeholder="請輸入統一編號" type="tel" />
+        </div>
+        <FormSelect
+          v-if="form.invoiceType === 'eInvoice'"
+          v-model="form.invoiceMethod"
+          label="載具類別"
+          :options="invoiceMethodOptions"
+          defaultLabel="請選擇載具"
+        />
+        <FormInput
+          v-if="form.invoiceMethod === 'certificate'"
+          v-model="form.citizenCertificate"
+          label="自然人憑證卡號"
+          placeholder="請輸入憑證卡號"
+        />
+        <FormInput
+          v-if="form.invoiceMethod === 'mobile'"
+          v-model="form.mobileCarrier"
+          label="手機條碼載具"
+          placeholder="請輸入手機條碼"
+        />
+      </FrameContainer>
+
+      <!-- 7. 同意條款 & 完成訂單 -->
+      <FrameContainer>
+        <template #header>
+          <label class="checkbox">
+            <input type="checkbox" v-model="form.agreeTerms" /> 我同意相關
+            <a href="#">服務條款</a> 及 <a href="#">隱私政策</a>
+          </label>
+        </template>
+        <button class="complete-btn" :disabled="!form.agreeTerms" @click="submitOrder">
+          完成訂單
+        </button>
+      </FrameContainer>
+    </div>
+
   </div>
 </template>
 
@@ -263,9 +264,40 @@ function submitOrder() {
 @use "sass:color";
 
 .checkout-step2 {
-  display: grid;
-  gap: 16px;
-  padding-bottom: 32px;
+
+  @include respond-md {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  @include respond-xl {
+    justify-content: center;
+  }
+
+  .top-block {
+    @include respond-md {
+      width: 100%;
+    }
+
+    @include respond-xl {
+      max-width: 1400px;
+    }
+  }
+
+  .bottom-block {
+
+    @include respond-md {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    @include respond-xl {
+      max-width: 1400px;
+    }
+  }
 }
 
 .sub-total,
@@ -345,9 +377,6 @@ function submitOrder() {
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
-
-
-
 
 }
 

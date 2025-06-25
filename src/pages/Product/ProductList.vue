@@ -138,8 +138,8 @@ function prevPage() {
 // 7. 其他固定資料
 const bannerMap = {
   all:    { title: '探索全站好物',     background: '/images/飛機啦.png' },
-  couple: { title: '甜蜜情侶專區',     background: '/images/banner-couple.jpg' },
-  healing:{ title: '療癒小物集合',     background: '/images/banner-healing.jpg' },
+  couple: { title: '甜蜜情侶專區',     background: '/images/BANNER情侶商品.png' },
+  healing:{ title: '療癒小物集合',     background: '/images/BANNER四商品.png' },
   useful: { title: '實用生活選品',     background: '/images/banner-useful.jpg' }
 }
 const bannerTitle = computed(() =>
@@ -191,37 +191,51 @@ const sortOptions2 = [
   @include respond-lg {
     display: grid;
     grid-template-columns: 1fr 5fr;
+    max-width: 1400px;
+    margin: 0 auto;
   }
 
   .category-nav {
-  display: none;
+    display: none;
 
-  @include respond-lg {
-    display: flex;
-    // justify-content: center;
-    flex-direction: column;
-    gap: 24px;
-    padding: 16px 0;
-    background: #f8f8f8;
+    @include respond-lg {
+      display: flex;
+      // justify-content: center;
+      flex-direction: column;
+      gap: 24px;
+      padding: 16px 0;
+      background: #f8f8f8;
 
-    .category-link {
-      color: #666;
-      font-size: 16px;
-      text-decoration: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      transition: background 0.2s;
+      .category-link {
+        color: #666;
+        font-size: 16px;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        transition: background 0.2s;
 
-      &:hover {
-        background: #ddd;
-      }
+        @include respond-sm {
+          font-size: 18px;
+        }
 
-      &.active {
-        background: $color-primary;
-        color: white;
+        @include respond-lg {
+          font-size: 20px;
+        }
+
+        @include respond-xxl {
+          font-size: 22px;
+        }
+
+        &:hover {
+          background: #ddd;
+        }
+
+        &.active {
+          background: $color-primary;
+          color: white;
+        }
       }
     }
-  }
 }
 
   .top-bar {
@@ -253,8 +267,12 @@ const sortOptions2 = [
     grid-template-columns: 1fr 1fr;
     gap: 16px;
 
-    @include respond-lg {
+    @include respond-md {
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include respond-xl {
+      grid-template-columns: repeat(4, 1fr);
     }
   }
   

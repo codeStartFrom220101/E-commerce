@@ -24,6 +24,14 @@ defineProps({
   font-size: 12px;
   color: #fff;
 
+  @include respond-md {
+    font-size: 14px;
+  }
+
+  @include respond-xl {
+    font-size: 16px;
+  }
+
   a {
     color: #fff;
     text-decoration: none;

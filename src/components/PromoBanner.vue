@@ -42,12 +42,12 @@ const formattedTitle = computed(() => {
     height: 350px;
   }
 
-  @include respond-lg {
+  @include respond-md {
     height: 600px;
   }
 
   @include respond-xxl {
-    height: 100vh;
+    height: 70vh;
   }
 
   .content {
@@ -59,6 +59,18 @@ const formattedTitle = computed(() => {
       font-size: 20px;
       margin-bottom: 12px;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+        @include respond-sm {
+          font-size: 24px;
+        }
+
+        @include respond-md {
+          font-size: 32px;
+        }
+
+        @include respond-xxl {
+          font-size: 48px;
+        }
     }
 
     .cta-btn {

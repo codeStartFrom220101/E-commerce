@@ -1,83 +1,110 @@
 <template>
-  <div class="cart-item-row">
-    <!-- 商品縮圖，跨兩行顯示 -->
+  <table class="cart-item-row-pc
+  ">
+    <thead>
+      <tr>
+        <th>商品資料</th>
+        <th>單件價格</th>
+        <th>數量</th>
+        <th>小計</th>
+        <th>刪除</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="item in props.items" :key="item.id">
+        <td>
+          <img class="thumbnail" :src="item.image" :alt="item.name" />
+          <div class="title">
+            {{ item.name }}
+            <span class="variant">| {{ item.variant }} {{ `${item.isAddOn ? '加購商品' : ''}` }}</span>
+          </div>
+        </td>
+        <td>
+          <div class="unit-price">NT$ {{ item.price }}</div>
+        </td>
+        <td>
+          <div v-if="props.editable && !item.isAddOn" class="quantity-control">
+            <button @click="emit('updateQty', { id: item.id, delta: -1 })" :disabled="item.quantity <= 1">
+              <font-awesome-icon :icon="['fas', 'minus']" />
+            </button>
+            <input
+              type="number"
+              v-model.number="quantities[item.id]"
+              min="1"
+              @change="onQtyChange(item.id)"
+            />
+            <button @click="emit('updateQty', { id: item.id, delta: 1 })">
+              <font-awesome-icon :icon="['fas', 'plus']" />
+            </button>
+          </div>
+          <div v-else class="quantity-static">{{ item.quantity }}</div>
+        </td>
+        <td>
+          <div class="line-total">NT$ {{ item.quantity * item.price }}</div>
+        </td>
+        <td>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="cart-item-row-mb" v-for="item in props.items" :key="item.id">
+    <!-- section1 -->
     <div class="section1">
-      <img
-        class="thumbnail"
-        :src="item.image"
-        :alt="item.name"
-      />
-  
-      <!-- 商品名稱與規格 -->
+      <img class="thumbnail" :src="item.image" :alt="item.name" />
       <div class="title">
         {{ item.name }}
         <span class="variant">| {{ item.variant }} {{ `${item.isAddOn ? '加購商品' : ''}` }}</span>
       </div>
-  
-      <!-- 刪除按鈕及單價 -->
-       <div class="mobile-block" :class="{ 'step2': !editable }">
-         <button
-           class="remove-btn"
-           @click="$emit('remove', item.id)"
-           aria-label="移除商品"
-           v-if="editable"
-         >
+      <div class="mobile-block" :class="{ 'step2': !props.editable }">
+        <button
+          class="remove-btn"
+          @click="emit('remove', item.id)"
+          v-if="props.editable"
+        >
           <font-awesome-icon :icon="['fas', 'xmark']" />
-         </button>
-     
-         <div class="unit-price">
-           NT$ {{ item.price }}
-         </div>
-       </div>
+        </button>
+        <div class="unit-price">NT$ {{ item.price }}</div>
+      </div>
     </div>
 
+    <!-- section2 -->
     <div class="section2">
-      <!-- 數量顯示或控制  -->
       <div class="quantity-container">
         <div class="quantity-fig">數量:</div>
-        <!-- 如果可編輯 (step1) 顯示控制器，否則顯示靜態數字 -->
-        <div v-if="editable && !item.isAddOn" class="quantity-control">
-          <button
-            @click="$emit('updateQty', { id: item.id, delta: -1 })"
-            :disabled="item.quantity <= 1"
-            aria-label="減少數量"
-          >
+        <div v-if="props.editable && !item.isAddOn" class="quantity-control">
+          <button @click="emit('updateQty', { id: item.id, delta: -1 })" :disabled="item.quantity <= 1">
             <font-awesome-icon :icon="['fas', 'minus']" />
           </button>
           <input
             type="number"
-            v-model.number="localQty"
+            v-model.number="quantities[item.id]"
             min="1"
-            @change="onQtyChange"
-            aria-label="商品數量"
+            @change="onQtyChange(item.id)"
           />
-          <button
-            @click="$emit('updateQty', { id: item.id, delta: 1 })"
-            aria-label="增加數量"
-          >
+          <button @click="emit('updateQty', { id: item.id, delta: 1 })">
             <font-awesome-icon :icon="['fas', 'plus']" />
           </button>
         </div>
         <div v-else class="quantity-static">{{ item.quantity }}</div>
       </div>
-  
-      <!-- 小計  -->
-      <div class="line-total">
-        NT$ {{ item.quantity  * item.price }}
-      </div>
+      <div class="line-total">NT$ {{ item.quantity * item.price }}</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+
+
+
+import { reactive, watchEffect } from 'vue'
 
 const props = defineProps({
-  item: {
-    type: Object,
+  items: {
+    type: Array,
     required: true
   },
-  // editable: true for Step1 (quantity control), false for Step2 (static)
   editable: {
     type: Boolean,
     default: true
@@ -85,21 +112,151 @@ const props = defineProps({
 })
 const emit = defineEmits(['remove', 'updateQty'])
 
-// 本地管理 input 綁定，props 變更時也同步回來
-const localQty = ref(props.item.quantity)
-watch(
-  () => props.item.quantity,
-  (q) => { localQty.value = q }
-)
-function onQtyChange() {
-  emit('updateQty', { id: props.item.id, quantity: localQty.value })
+// 用物件儲存每一個商品的數量
+const quantities = reactive({})
+
+// 初始化所有商品數量（有 item 才會進來）
+watchEffect(() => {
+  props.items.forEach(item => {
+    if (item && item.id !== undefined) {
+      quantities[item.id] = item.quantity
+    }
+  })
+})
+
+// 數量 input change handler
+function onQtyChange(id) {
+  return () => {
+    const quantity = quantities[id]
+    if (typeof quantity === 'number' && quantity >= 1) {
+      emit('updateQty', { id, quantity })
+    }
+  }
 }
+
 </script>
 
 <style scoped lang="scss">
 @use "@/assets/styles/variables" as vars; // 定義了 $color-border, $color-secondary, $color-text
 
-.cart-item-row {
+.cart-item-row-pc {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-bottom: 24px;
+
+  thead {
+    background-color: #f8f8f8;
+
+    th {
+      padding: 12px 8px;
+      text-align: left;
+      color: vars.$color-text;
+      font-weight: 600;
+      border-bottom: 1px solid vars.$color-border;
+
+      
+      &:nth-of-type(4) {
+        text-align: right;
+      }
+    }
+
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid vars.$color-border;
+
+      td {
+        padding: 12px 8px;
+        vertical-align: middle;
+
+        &:nth-of-type(4) {
+          text-align: right;
+        }
+      }
+
+      // 商品圖片 + 名稱
+      td:nth-child(1) {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .thumbnail {
+          width: 80px;
+          height: 80px;
+          object-fit: cover;
+          border-radius: 4px;
+        }
+
+        .title {
+          flex-grow: 1;
+          color: vars.$color-text;
+
+          .variant {
+            margin-left: 8px;
+            color: vars.$color-secondary;
+            font-size: 12px;
+          }
+        }
+      }
+
+      // 單價
+      .unit-price {
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      // 數量控制區
+      .quantity-control {
+        display: flex;
+        align-items: center;
+
+        button {
+          width: 28px;
+          height: 28px;
+          border: 1px solid vars.$color-border;
+          background: none;
+          cursor: pointer;
+          font-size: 14px;
+
+          &:nth-of-type(1) {
+            border-radius: 4px 0 0 4px;
+          }
+
+          &:nth-of-type(2) {
+            border-radius: 0 4px 4px 0;
+          }
+        }
+
+        input {
+          width: 48px;
+          height: 28px;
+          text-align: center;
+          border-top: 1px solid vars.$color-border;
+          border-bottom: 1px solid vars.$color-border;
+          border-left: none;
+          border-right: none;
+          font-size: 14px;
+        }
+      }
+
+      .quantity-static {
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      // 小計
+      .line-total {
+        font-size: 14px;
+        font-weight: bold;
+        color: vars.$color-text;
+      }
+    }
+  }
+}
+
+.cart-item-row-mb {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -222,6 +379,22 @@ function onQtyChange() {
       font-size: 10px;
       font-weight: bold;
     }
+  }
+}
+
+.cart-item-row-pc {
+  display: none;
+
+  @include respond-md {
+    display: table;
+  }
+}
+
+.cart-item-row-mb {
+  display: block;
+
+  @include respond-md {
+    display: none;
   }
 }
 </style>

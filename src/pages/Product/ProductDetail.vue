@@ -14,102 +14,127 @@
 
   <transition name="slide-fade">
     <div class="product-detail-wrapper">
-      <Breadcrumbs :paths="breadcrumbPaths" />
       <div class="product-detail" v-if="product">
-        <!-- 商品圖片 -->
-        <div class="image-section">
-          <img :src="product.image" :alt="product.name" />
-        </div>
-        <!-- 分享區 -->
-        <div class="share">
-          <h6>分享到：</h6>
-          <a :href="facebookShareUrl" class="facebook" target="_blank" rel="noopener noreferrer">
-            <font-awesome-icon :icon="['fab', 'facebook']" />
-          </a>
-          <a :href="lineShareUrl" class="line" target="_blank" rel="noopener noreferrer">
-            <font-awesome-icon :icon="['fab', 'line']" />
-          </a>
-          <button @click="shareWeb" class="instagram-btn">
-            <font-awesome-icon 
-              class="instagram" 
-              :icon="['fab', 'instagram']" 
-            />
-          </button>
+        <div class="product-detail-block">
+          <!-- 商品圖片 -->
+          <div class="image-section">
+            <img :src="product.image" :alt="product.name" />
+          </div>
+          <Breadcrumbs :paths="breadcrumbPaths" />
+          <!-- 分享區 -->
+          <div class="share">
+            <h6>分享到：</h6>
+            <a :href="facebookShareUrl" class="facebook" target="_blank" rel="noopener noreferrer">
+              <font-awesome-icon :icon="['fab', 'facebook']" />
+            </a>
+            <a :href="lineShareUrl" class="line" target="_blank" rel="noopener noreferrer">
+              <font-awesome-icon :icon="['fab', 'line']" />
+            </a>
+            <button @click="shareWeb" class="instagram-btn">
+              <font-awesome-icon 
+                class="instagram" 
+                :icon="['fab', 'instagram']" 
+              />
+            </button>
+          </div>
         </div>
 
         <!-- 商品資訊區 -->
-        <div class="info-section">
-          <h2 class="name">{{ product.name }}</h2>
-          <ul class="promo-info">
-            <li>限時至 4/30・全站滿 $520 免運費！</li>
-            <li>
-              連假限定｜
-              <router-link
-                :to="{ name: 'ProductList', params: { category: 'healing' } }"
-                class="promo-link"
-              >
-                療癒選物
-              </router-link>
-              只要 $99 起！
-            </li>
-            <li>
-              <router-link
-                :to="{ name: 'ProductList', params: { category: 'couple' } }"
-                class="promo-link"
-              >
-                情侶小物
-              </router-link>
-              任選 2 件 現折 $10
-            </li>
-          </ul>
-          <p class="price">NT$ {{ product.price }}</p>
-
-          <!-- 數量控制 -->
-          <div class="quantity-control">
-            <h6>數量</h6>
-            <button @click="decreaseQty">
-              <font-awesome-icon :icon="['fas', 'minus']" />
-            </button>
-            <input
-              type="number"
-              v-model.number="quantity"
-              min="1"
-              @blur="validateQty"
-            />
-            <button @click="increaseQty">
-              <font-awesome-icon :icon="['fas', 'plus']" />
-            </button>
+        <div class="product-detail-block">
+          <div class="info-section">
+            <h2 class="name">{{ product.name }}</h2>
+            <ul class="promo-info">
+              <li>限時至 4/30・全站滿 $520 免運費！</li>
+              <li>
+                連假限定｜
+                <router-link
+                  :to="{ name: 'ProductList', params: { category: 'healing' } }"
+                  class="promo-link"
+                >
+                  療癒選物
+                </router-link>
+                只要 $99 起！
+              </li>
+              <li>
+                <router-link
+                  :to="{ name: 'ProductList', params: { category: 'couple' } }"
+                  class="promo-link"
+                >
+                  情侶小物
+                </router-link>
+                任選 2 件 現折 $10
+              </li>
+            </ul>
+            <p class="price">NT$ {{ product.price }}</p>
+  
+            <!-- 數量控制 -->
+            <div class="quantity-control">
+              <h6>數量</h6>
+              <button @click="decreaseQty">
+                <font-awesome-icon :icon="['fas', 'minus']" />
+              </button>
+              <input
+                type="number"
+                v-model.number="quantity"
+                min="1"
+                @blur="validateQty"
+              />
+              <button @click="increaseQty">
+                <font-awesome-icon :icon="['fas', 'plus']" />
+              </button>
+            </div>
+  
+            <!-- 加入購物車 / 立即購買 -->
+            <div class="btn-content">
+              <button class="add-cart-btn" @click="addToCart">
+                加入購物車
+              </button>
+              <button class="buy-btn" @click="addToCart">
+                立即購買
+              </button>
+            </div>
+  
+            
           </div>
 
-          <!-- 加入購物車 / 立即購買 -->
-          <div class="btn-content">
-            <button class="add-cart-btn" @click="addToCart">
-              加入購物車
-            </button>
-            <button class="buy-btn" @click="addToCart">
-              立即購買
-            </button>
-          </div>
+        </div>
 
+        <div class="product-detail-block">
           <!-- 商品描述 / 顧客評價 -->
           <div class="another-info">
             <div class="title">
-              <div class="title-block">
-                <h4 class="active">商品描述</h4>
+              <div
+                class="title-block"
+                @click="activeTab = 'description'"
+              >
+                <h4 :class="{ active: activeTab === 'description' }">商品描述</h4>
               </div>
-              <div class="title-block">
-                <h4>顧客評價</h4>
+              <div
+                class="title-block"
+                @click="activeTab = 'reviews'"
+              >
+                <h4 :class="{ active: activeTab === 'reviews' }">顧客評價</h4>
               </div>
             </div>
-            <div class="description" v-if="true">
+
+            <div class="description" v-if="activeTab === 'description'">
               <h3>商品描述</h3>
               <p>{{ product.description }}</p>
             </div>
+
             <div class="costumer-response" v-else>
               <h3>顧客評價</h3>
+              <ul v-if="product.reviews">
+                <li>🌟 超可愛的設計，小朋友一看到就愛不釋手！</li>
+                <li>🧸 材質比想像中好，拿在手上很療癒，超推！</li>
+                <li>🎁 拿來送禮超適合，朋友收到後立刻問哪裡買的～</li>
+                <li>💡 實品跟照片一樣精緻，包裝也很細心，值得收藏。</li>
+                <li>🚚 出貨很快，隔天就收到了！整體體驗超棒～</li>
+              </ul>
+              <p v-else>此商品現在沒有其他評論</p>
             </div>
           </div>
-
+  
           <!-- 相似產品 -->
           <div class="similar">
             <h3>相似產品</h3>
@@ -117,7 +142,6 @@
                 <ProductCard v-for="item in similarProducts" :key="item.id" :product="item" />
             </div>
           </div>
-
         </div>
       </div>
       <div v-else class="not-found">
@@ -140,6 +164,7 @@ const route = useRoute()
 const router = useRouter()
 const productStore = useProductStore()
 const cartStore = useCartStore()
+const activeTab = ref('description') // 預設為商品描述
 
 // 動態產品資料
 const productId = computed(() => Number(route.params.id))
@@ -220,7 +245,6 @@ const addToCart = () => {
   }
 }
 
-// 立即結帳保留位置
 
 // 相似產品列表產生
 const similarProducts = computed(() =>
@@ -233,13 +257,36 @@ const similarProducts = computed(() =>
 
 .product-detail {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 
+  @include respond-lg {
+    padding-top: 78px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  &-block {
+    width: 100%;
+
+    @include respond-lg {
+      &:nth-of-type(1), &:nth-of-type(2) {
+        width: 50%;
+      }
+
+      &:nth-of-type(3) {
+        margin: 0 auto;
+        max-width: 1400px;
+      }
+    }
+  }
+  
   .image-section {
     text-align: center;
+      height: 50vh;
 
     img {
       width: 100%;
+      height: 100%;
       object-fit: cover;
     }
   }
@@ -408,83 +455,92 @@ const similarProducts = computed(() =>
           background: color.adjust($color-primary, $lightness: -10%);
         }
       }
-    }
+    }    
+  }
 
-    .another-info {
+  .another-info {
+    padding: 8px 16px;
 
-      .title {
+    .title {
+      display: flex;
+      font-size: 16px;
+      border-bottom: 2px solid #d9d9d9;
+      margin-bottom: 16px;
+
+      &-block {
+        flex: 1;
         display: flex;
-        font-size: 16px;
-        border-bottom: 2px solid #d9d9d9;
-        margin-bottom: 16px;
+        align-items: center;
+        justify-content: center;
 
-        &-block {
-          flex: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          h4 {
-            text-align: center;
-            padding: 8px 16px;
-            cursor: pointer;
-            
-            &.active {
-              border-bottom: 2px solid #000;
-            }
-          }
-        }
-      }
-
-      .description {
-
-        h3 {
-          font-size: 20px;
+        h4 {
           text-align: center;
-          position: relative;
-          padding-bottom: 8px;
-          margin-bottom: 16px;
-
-          &::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
+          padding: 8px 16px;
+          cursor: pointer;
+          
+          &.active {
             border-bottom: 2px solid #000;
           }
         }
       }
     }
 
-    .similar {
+    .description, .costumer-response {
 
       h3 {
-          font-size: 20px;
-          text-align: center;
-          position: relative;
-          padding-bottom: 8px;
-          margin-bottom: 16px;
+        font-size: 20px;
+        text-align: center;
+        position: relative;
+        padding-bottom: 8px;
+        margin-bottom: 16px;
 
-          &::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            border-bottom: 2px solid #000;
-          }
-      }
-
-      .similar-product {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 20px;
+          border-bottom: 2px solid #000;
+        }
       }
     }
+  }
 
+  .similar {
+    padding: 8px 16px;
+
+    @include respond-sm {
+      padding: 16px;
+    }
+
+    h3 {
+        font-size: 20px;
+        text-align: center;
+        position: relative;
+        padding-bottom: 8px;
+        margin-bottom: 16px;
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 20px;
+          border-bottom: 2px solid #000;
+        }
+    }
+
+    .similar-product {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+
+      @include respond-sm {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
   }
 }
 
@@ -495,3 +551,4 @@ const similarProducts = computed(() =>
   color: #999;
 }
 </style>
+

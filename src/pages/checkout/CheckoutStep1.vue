@@ -1,18 +1,17 @@
 <template>
   <div class="checkout-step1">
+    <div class="top-block">
       <!-- 購物車 -->
       <FrameContainer>
         <template #header>
           購物車 ({{ cartItems.length }} 件)
         </template>
         <CartItemRow
-        v-for="item in cartItems"
-        :key="item.id"
-        :item="item"
-        :editable="true"
-        @remove="removeItem"
-        @updateQty="updateQuantity"
-      />
+          :items="cartItems"
+          :editable="true"
+          @remove="removeItem"
+          @updateQty="updateQuantity"
+        />
         <!-- 已使用優惠 -->
         <div v-if="promos.length" class="discounts">
           <p>已享用之優惠</p>
@@ -26,71 +25,75 @@
           </ul>
           <p>折抵總額：-NT$ {{ totalDiscount }}</p>
         </div>
-
+  
       </FrameContainer>
+    </div>
 
-    <FrameContainer>
-      <template #header>加購專區(選擇一項您喜歡的商品吧)</template>
-      <div class="add-ons-wrapper">
-        <div class="hidden-control">
-          <AddOnCard
-            v-for="item in addOnItems"
-            :key="item.id"
-            :item="item"                              
-            :image="item.image"
-            :title="item.name"
-            :originalPrice="item.price"
-            :discountedPrice="item.price - 5"
-            :locked="false"
-            @select="addOneAddOn"
-          />
+    <div class="bottom-block">
+      <FrameContainer>
+        <template #header>加購專區(選擇一項您喜歡的商品吧)</template>
+        <div class="add-ons-wrapper">
+          <div class="hidden-control">
+            <AddOnCard
+              v-for="item in addOnItems"
+              :key="item.id"
+              :item="item"                              
+              :image="item.image"
+              :title="item.name"
+              :originalPrice="item.price"
+              :discountedPrice="item.price - 5"
+              :locked="false"
+              @select="addOneAddOn"
+            />
+          </div>
         </div>
-      </div>
-    </FrameContainer>
+      </FrameContainer>
+  
+      <FrameContainer>
+        <template #header>選擇送貨及付款方式</template>
+        <form action="#" class="form-container">
+  
+          <!-- 運送地點 -->
+          <FormSelect
+            v-model="form.region"
+            :options="regionOptions"
+            label="運送地點"
+            defaultLabel="請選擇運送地點"
+          />
+  
+          <!-- 送貨方式 -->
+          <FormSelect
+            v-model="form.shipping"
+            :options="shippingOptions"
+            label="送貨方式"
+            defaultLabel="請選擇送貨方式"
+            :fig="'貼心提醒♡若使用超商地址為收件地址，需額外收取 40 元手續費。'"
+          />
+  
+          <!-- 付款方式 -->
+          <FormSelect
+            v-model="form.payment"
+            :options="paymentOptions"
+            label="付款方式"
+            defaultLabel="請選擇付款方式"
+            :fig="'【首購獨享】新註冊會員送$100購物金，加入LINE官方好友送$300'"
+          />
+        </form>
+      </FrameContainer>
+  
+      <OrderSummary
+        :subtotal="subtotal"
+        :shipping-fee-text="shippingFeeText"
+        :total-discount="totalDiscount"
+        :total="total"
+        :can-proceed="canProceed"
+        :region="form.region"
+        :shipping="form.shipping"
+        :payment="form.payment"
+        @proceed="goToStep2"
+      />
+    </div>
 
-    <FrameContainer>
-      <template #header>選擇送貨及付款方式</template>
-      <form action="#" class="form-container">
-
-        <!-- 運送地點 -->
-        <FormSelect
-          v-model="form.region"
-          :options="regionOptions"
-          label="運送地點"
-          defaultLabel="請選擇運送地點"
-        />
-
-        <!-- 送貨方式 -->
-        <FormSelect
-          v-model="form.shipping"
-          :options="shippingOptions"
-          label="送貨方式"
-          defaultLabel="請選擇送貨方式"
-          :fig="'貼心提醒♡若使用超商地址為收件地址，需額外收取 40 元手續費。'"
-        />
-
-        <!-- 付款方式 -->
-        <FormSelect
-          v-model="form.payment"
-          :options="paymentOptions"
-          label="付款方式"
-          defaultLabel="請選擇付款方式"
-          :fig="'【首購獨享】新註冊會員送$100購物金，加入LINE官方好友送$300'"
-        />
-      </form>
-    </FrameContainer>
-
-    <OrderSummary
-      :subtotal="subtotal"
-      :shipping-fee-text="shippingFeeText"
-      :total-discount="totalDiscount"
-      :total="total"
-      :can-proceed="canProceed"
-      :region="form.region"
-      :shipping="form.shipping"
-      :payment="form.payment"
-      @proceed="goToStep2"
-  />
 
 
   </div>
@@ -236,10 +239,49 @@ function goToStep2() {
 
   // 跳轉到第二步驟
   router.push({ name: 'CheckoutStep2' })
+
+  
 }
 </script>
 
 <style scoped lang="scss">
+.checkout-step1 {
+
+  @include respond-md {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  @include respond-xl {
+    justify-content: center;
+  }
+
+  .top-block {
+    @include respond-md {
+      width: 100%;
+    }
+
+    @include respond-xl {
+      max-width: 1400px;
+    }
+  }
+
+  .bottom-block {
+
+    @include respond-md {
+      display: grid;
+      width: 100%;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    @include respond-xl {
+      max-width: 1400px;
+    }
+  }
+}
+
 .discounts {
   color: #000;
   padding-top: 16px;
@@ -282,20 +324,20 @@ function goToStep2() {
 }
 
 .add-ons-wrapper {
-  display: flex;
+    overflow-x: auto;
+    padding-bottom: 20px;
 
   .hidden-control {
-    overflow-x: auto;
     display: flex;
     gap: 16px;
 
     
-    /* 隱藏原生滾動條（可選） */
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    -ms-overflow-style: none;
-    scrollbar-width: none;
   }
+  /* 隱藏原生滾動條（可選） */
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
+  // -ms-overflow-style: none;
+  // scrollbar-width: none;
 }
 </style>

@@ -2,8 +2,10 @@
   <div class="login-banner" :style="{ backgroundImage: `url(${imageUrl})` }">
     <div class="items-container">
       <div v-for="(item, idx) in items" :key="idx" class="promo-item">
-        <span class="tag">{{ item.tag }}</span>
-        <span class="text">{{ item.text }}</span>
+        <div class="promo-grid">
+          <div class="tag">{{ item.tag }}</div>
+          <div class="text">{{ item.text }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -43,32 +45,56 @@ const props = defineProps({
   .items-container {
     display: flex;
     flex-direction: column;
-    padding: 32px 16px;
     gap: 16px;
 
     .promo-item {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 14px;
+      font-size: 12px;
       color: $color-light-text;
+      text-wrap: wrap;
 
-      .tag {
-        display: inline-block;
-        background: $color-light-text;
-        padding: 4px 36px;
-        color: #333;
-        border-radius: 999px;
-        font-size: 12px;
-        white-space: nowrap;
+      @include respond-sm {
+        font-size: 14px;
       }
-      
-      .text {
-        flex: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+
+      .promo-grid {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 8px;
+
+        @include respond-sm {
+          flex-wrap: nowrap;
+        }
+        
+        .tag {
+          display: inline-block;
+          background: $color-light-text;
+          padding: 4px 18px;
+          color: #333;
+          border-radius: 999px;
+          font-size: 12px;
+          white-space: nowrap;
+  
+          @include respond-sm {
+            padding: 4px 36px;
+          }
+        }
+        
+        .text {
+          width: 100%;
+          text-align: center;
+          white-space: nowrap;
+
+          @include respond-sm {
+          text-align: left;
+          }
+        }
       }
+
     }
   }
 }

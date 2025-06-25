@@ -1,5 +1,5 @@
 <template>
-  <div id="app" ref="appRef" @scroll="handleScroll">
+  <div id="app">
     <Header :isTop="isTop" />
     <AsideMenu />
     <CartSideBar />
@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import Header from '@/components/Header.vue'
 import AsideMenu from '@/components/AsideMenu.vue'
 import CartSideBar from '@/components/CartSideBar.vue'
@@ -21,22 +21,21 @@ import Toast from '@/components/Toast.vue'
 
 // 取得 app 元素捲動狀態
 const isTop = ref(true)
-const appRef = ref(null)
+
 
 const handleScroll = () => {
-  isTop.value = appRef.value.scrollTop === 0
+  isTop.value = window.scrollY === 0
 }
 
 onMounted(() => {
-  // 初次載入也判斷一次
-  handleScroll()
+  window.addEventListener('scroll', handleScroll)
+  handleScroll() // 初始判斷一次
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll)
 })
 </script>
 
 <style scoped>
-#app {
-  height: 100vh;
-  overflow-y: auto;
-
-}
 </style>

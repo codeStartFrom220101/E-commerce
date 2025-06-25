@@ -20,7 +20,7 @@
     <!-- 指示器 -->
     <div class="indicators">
       <span
-        v-for="(dot, i) in items.length / 2"
+        v-for="(dot, i) in totalPages"
         :key="i"
         :class="{ active: i === currentSlide }"
         @click="goTo(i)"
@@ -30,19 +30,34 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick, onUnmounted } from 'vue'
+import { ref, onMounted, nextTick, onUnmounted, watch } from 'vue'
 
 const props = defineProps({
-  items: { type: Array, required: true },
+  items: { type: Array, required: true }
 })
 
 const wrapperRef = ref(null)
 const currentSlide = ref(0)
-const cardWidth = ref(0)
+const slideStep = ref(0) // 每次滑動多少 px
+const totalPages = ref(0)
 
+// 重新計算卡片寬度（依據實際排版）
+const calculateSliderMetrics = () => {
+  const wrapper = wrapperRef.value
+  if (!wrapper) return
+
+  // 滾動總距離 / 可視寬度 = 可滑動幾頁
+  const scrollWidth = wrapper.scrollWidth
+  const clientWidth = wrapper.clientWidth
+
+  slideStep.value = clientWidth
+  totalPages.value = Math.ceil((scrollWidth - clientWidth) / slideStep.value) + 1
+}
+
+// 手動滑動時更新 currentSlide
 const goTo = (index) => {
   if (!wrapperRef.value) return
-  const offset = index * cardWidth.value
+  const offset = index * slideStep.value
   wrapperRef.value.scrollTo({ left: offset, behavior: 'smooth' })
   currentSlide.value = index
 }
@@ -50,35 +65,35 @@ const goTo = (index) => {
 const handleScroll = () => {
   if (!wrapperRef.value) return
   const scrollLeft = wrapperRef.value.scrollLeft
-  const index = Math.round(scrollLeft / cardWidth.value)
-  currentSlide.value = index
+  currentSlide.value = Math.round(scrollLeft / slideStep.value)
 }
 
-
-onMounted(async () => {
-  await nextTick()
-  const cards = wrapperRef.value?.querySelectorAll('.slider-item')
-if (cards.length >= 2) {
-  const card1 = cards[0].getBoundingClientRect()
-  const card2 = cards[1].getBoundingClientRect()
-  const distance = card2.left - card1.left
-  cardWidth.value = distance * 2
-}
-})
-
-// 自動撥放
+// 自動輪播
 let autoplayTimer = null
-
-onMounted(() => {
+const startAutoplay = () => {
   autoplayTimer = setInterval(() => {
-    const next = (currentSlide.value + 1) % (props.items.length / 2)
+    console.log(props.items.length);
+    
+    const totalSlides = Math.ceil(props.items.length / visibleCards.value)
+    const next = (currentSlide.value + 1) % totalSlides
     goTo(next)
   }, 5000)
+}
+const stopAutoplay = () => {
+  if (autoplayTimer) clearInterval(autoplayTimer)
+}
+
+onMounted(() => {
+  nextTick(() => {
+    calculateSliderMetrics()
+  })
+  window.addEventListener('resize', calculateSliderMetrics)
 })
 
 onUnmounted(() => {
-  clearInterval(autoplayTimer)
+  window.removeEventListener('resize', calculateSliderMetrics)
 })
+
 </script>
 
 <style scoped lang="scss">

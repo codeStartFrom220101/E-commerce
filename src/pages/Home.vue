@@ -2,7 +2,9 @@
   <div class="home">
 
     <!-- Hero Banner 區 -->
-    <HomeSlider />
+    <div class="homeSlider">
+      <HomeSlider />
+    </div>
 
     <!-- 商品分類導覽區 -->
     <section class="category-nav">
@@ -29,7 +31,7 @@
 
     <!-- 推薦選購情侶商品 -->
     <PromoBanner
-      image="/images/promoBanner375.png"
+      image="/images/promoBanner.png"
       title="把微小的幸福，送給最愛的人"
       ctaText="立即選購"
     />
@@ -77,6 +79,15 @@ onMounted(async () => {
   flex-direction: column;
 }
 
+.homeSlider {
+  width: 100%;
+  height: 375px;
+
+  @include respond-lg {
+    height: 70vh;
+  }
+}
+
 .scroll-row {
   display: flex;
   overflow-x: auto;
@@ -108,8 +119,8 @@ onMounted(async () => {
   padding: 32px 16px 0 16px;
 
     @include respond-lg {
+      margin: 0 auto;
       max-width: 1000px;
-      border: 1px solid #000;
     }
 }
 
@@ -121,7 +132,7 @@ onMounted(async () => {
   padding: 16px 0;
   font-size: 20px;
   font-weight: bold;
-  color: $color-text;
+  color: $color-text; 
 
   @include respond-lg {
     font-size: 32px;

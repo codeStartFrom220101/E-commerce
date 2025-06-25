@@ -53,7 +53,6 @@ const addToCart = () => {
   position: relative;
     transition: transform 0.2s ease;
     border-radius: 12px;
-    overflow: hidden;
   
     &:hover {
       transform: translateY(-4px);

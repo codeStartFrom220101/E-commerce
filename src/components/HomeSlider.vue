@@ -7,12 +7,12 @@
       :class="{ active: index === slider.currentSlide }"
     >
       <img :src="slide.image" :alt="slide.alt" />
-      <div class="slide-content">
+      <!-- <div class="slide-content">
         <div class="txt">
           <h2>{{ slide.title }}</h2>
         </div>
         <button class="cta-btn">{{ slide.ctaText }}</button>
-      </div>
+      </div> -->
     </div>
 
     <!-- Indicator -->
@@ -44,35 +44,35 @@ const slider = useSliderStore()
 const slides = [
   {
     id: 1,
-    image: '/images/slide1.png',
-    title: '送給彼此',
+    image: '/images/unsplash/1.jpg',
+    title: '帥氣星際小物',
     ctaText: '立即選購',
     link: '/product/couple',
   },
   {
     id: 2,
-    image: '/images/slide2.png',
-    title: '限時優惠',
+    image: '/images/unsplash/2.jpg',
+    title: '各式療育娃娃',
     ctaText: '查看優惠',
     link: '/product',
   },
   {
     id: 3,
-    image: '/images/slide3.png',
+    image: '/images/unsplash/3.jpg',
     title: '新品登場',
     ctaText: '搶先看',
     link: '/product',
   },
   {
     id: 4,
-    image: '/images/slide4.png',
+    image: '/images/unsplash/4.jpg',
     title: '溫柔相伴',
     ctaText: '馬上逛',
     link: '/product/healing',
   },
   {
     id: 5,
-    image: '/images/slide5.png',
+    image: '/images/unsplash/5.jpg',
     title: '萌怪來襲',
     ctaText: '收服牠',
     link: '/product',
@@ -108,24 +108,21 @@ onUnmounted(() => {
 
 .home-slider {
   position: relative;
+  display: flex;
   width: 100%;
-  height: 375px;
+  height: 100%;
   overflow: hidden;
-
-  @include respond-lg {
-    height: 100vh;
-  }
+  
 
   .slide {
-    position: absolute;
+    position: relative;
     inset: 0;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: 0;
+    transition: width .5s ease;    
+    overflow: hidden;
+    width: 0;
 
     &.active {
-      opacity: 1;
-      z-index: 1;
+      width: 100%;
     }
 
     img {

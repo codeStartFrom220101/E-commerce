@@ -6,7 +6,7 @@
     "sold": 50,
     "createdAt": "2024-04-25",
     "category": "healing",
-    "image": "",
+    "image": "/images/虎虎玩偶.png",
     "description": "虎虎玩偶採用高級仿羊絨面料，尺寸約25×18×10cm，填充PP綿，手感柔軟有彈性，重量約250g，適合作為抱枕或療癒擺飾，放在沙發或床頭皆宜。"
   },
   {
@@ -16,7 +16,7 @@
     "sold": 30,
     "createdAt": "2024-04-20",
     "category": "useful",
-    "image": "",
+    "image": "/images/木頭大象筷架.png",
     "description": "木頭大象筷架以天然胡桃木手工雕刻，尺寸約15×5×5cm，表面經防水塗層處理，耐磨防潮，可穩固收納筷子與餐具，兼具裝飾與實用。"
   },
   {
@@ -26,7 +26,7 @@
     "sold": 45,
     "createdAt": "2024-04-22",
     "category": "couple",
-    "image": "",
+    "image": "/images/愛心河馬搖搖杯.png",
     "description": "愛心河馬搖搖杯採用食品級硅膠與雙層玻璃杯身，容量約400ml，高約14cm，寬約8cm，附防滑底座與密封蓋，情侶對杯，共享甜蜜下午茶。"
   },
   {
@@ -36,7 +36,7 @@
     "sold": 60,
     "createdAt": "2024-04-23",
     "category": "healing",
-    "image": "",
+    "image": "/images/萌兔擺飾.png",
     "description": "萌兔擺飾使用超柔絨毛，尺寸約20×12×8cm，內含高彈性聚酯棉，輕盈約180g，質地細膩，為居家增添療癒氣息。"
   },
   {
@@ -46,7 +46,7 @@
     "sold": 90,
     "createdAt": "2024-04-10",
     "category": "healing",
-    "image": "",
+    "image": "/images/超人氣刺蝟.png",
     "description": "超人氣刺蝟公仔採植絨布製作，尺寸約22×14×10cm，填充PP棉，觸感柔軟，重量約210g，可擺放在書桌或床邊療癒心情。"
   },
   {
@@ -56,7 +56,7 @@
     "sold": 85,
     "createdAt": "2024-04-12",
     "category": "healing",
-    "image": "",
+    "image": "/images/可愛鴨子組.png",
     "description": "可愛鴨子組包含大小雙鴨造型收納盒，採ABS塑料製成，尺寸分別為10×8×6cm與15×12×9cm，耐磨防水，適合收納小物。"
   },
   {
@@ -66,7 +66,7 @@
     "sold": 70,
     "createdAt": "2024-04-15",
     "category": "healing",
-    "image": "",
+    "image": "/images/療癒白熊.png",
     "description": "療癒白熊公仔採用極細纖維絨毛，尺寸約24×16×12cm，內填高密度PP棉，柔軟Q彈，重量約260g，伴您放鬆時光。"
   },
   {
@@ -76,7 +76,7 @@
     "sold": 40,
     "createdAt": "2024-04-18",
     "category": "couple",
-    "image": "",
+    "image": "/images/幸福花鹿.png",
     "description": "幸福花鹿陶瓷擺飾，高約18cm，寬約12cm，表面施釉細膩，手繪花紋，情侶款一對，增添家居浪漫氛圍。"
   },
   {
@@ -86,7 +86,7 @@
     "sold": 55,
     "createdAt": "2024-04-17",
     "category": "useful",
-    "image": "",
+    "image": "/images/松鼠小物.png",
     "description": "松鼠小物收納盒以PET塑料製成，尺寸約12×8×7cm，透明盒身方便查看，適合收納耳機、飾品或文具小物。"
   },
   {
@@ -96,7 +96,7 @@
     "sold": 35,
     "createdAt": "2024-04-19",
     "category": "useful",
-    "image": "",
+    "image": "/images/萌虎杯墊組.png",
     "description": "萌虎杯墊組採EVA泡棉製作，尺寸10×10×0.5cm，共四片，輕巧防滑，隔熱效果佳，保護桌面不受燙傷。"
   },
   {
@@ -106,7 +106,7 @@
     "sold": 20,
     "createdAt": "2024-04-21",
     "category": "useful",
-    "image": "",
+    "image": "/images/森林系筆袋.png",
     "description": "森林系筆袋選用帆布材質，尺寸約20×8×6cm，耐磨防潑水，內部多夾層設計，大容量收納各式文具。"
   },
   {
@@ -116,7 +116,7 @@
     "sold": 65,
     "createdAt": "2024-04-16",
     "category": "healing",
-    "image": "",
+    "image": "/images/胖胖貓擺飾.png",
     "description": "胖胖貓擺飾以ABS塑料製成，尺寸約18×14×10cm，表面啞光烤漆，重量約300g，擺放桌面增添療癒感。"
   },
   {
@@ -126,7 +126,7 @@
     "sold": 75,
     "createdAt": "2024-04-14",
     "category": "healing",
-    "image": "",
+    "image": "/images/療癒狐狸燈.png",
     "description": "療癒狐狸燈使用ABS與PC混合材質，尺寸約16×12×9cm，內置暖光LED，可調光、觸控開關，適合床頭或書桌。"
   },
   {
@@ -136,7 +136,7 @@
     "sold": 50,
     "createdAt": "2024-04-13",
     "category": "healing",
-    "image": "",
+    "image": "/images/雲朵羊玩偶.png",
     "description": "雲朵羊玩偶採柔軟絨毛布製作，尺寸約23×17×11cm，填充PP棉，重量約240g，質地親膚，放在沙發或床邊皆宜。"
   },
   {
@@ -146,7 +146,7 @@
     "sold": 25,
     "createdAt": "2024-04-11",
     "category": "useful",
-    "image": "",
+    "image": "/images/小熊收納盒.png",
     "description": "小熊收納盒採PP塑料製成，尺寸約18×12×8cm，內部分隔可調，防塵防潮，適合收納化妝品與文具。"
   },
   {
@@ -156,7 +156,7 @@
     "sold": 42,
     "createdAt": "2024-04-09",
     "category": "couple",
-    "image": "",
+    "image": "/images/貓頭鷹杯子.png",
     "description": "貓頭鷹杯子為陶瓷材質，容量約300ml，高約12cm，寬約8cm，手繪貓頭鷹紋樣，情侶對杯共用自慰。"
   },
   {
@@ -166,7 +166,7 @@
     "sold": 68,
     "createdAt": "2024-04-08",
     "category": "healing",
-    "image": "",
+    "image": "/images/療癒章魚君.png",
     "description": "療癒章魚君公仔採高級絨毛面料，尺寸約22×13×12cm，內襯PP綿，柔軟有彈性，重量約230g，擺放辦公桌療癒心情。"
   },
   {
@@ -176,7 +176,7 @@
     "sold": 58,
     "createdAt": "2024-04-07",
     "category": "healing",
-    "image": "",
+    "image": "/images/可愛樹懶.png",
     "description": "可愛樹懶玩偶採植絨布料，尺寸約20×15×9cm，填充PP棉，重量約200g，質感柔軟，適合放在床頭或椅背。"
   },
   {
@@ -186,7 +186,7 @@
     "sold": 32,
     "createdAt": "2024-04-06",
     "category": "healing",
-    "image": "",
+    "image": "/images/森林兔夜燈.png",
     "description": "森林兔夜燈結合ABS與PC材質，尺寸約18×12×10cm，內置觸控LED燈，可調光和定時，為夜晚增添溫馨。"
   },
   {
@@ -196,7 +196,7 @@
     "sold": 48,
     "createdAt": "2024-04-05",
     "category": "couple",
-    "image": "",
+    "image": "/images/迷你長頸鹿.png",
     "description": "迷你長頸鹿公仔採超柔絨毛面料，尺寸約20×10×8cm，內填PP綿，重量約210g，一對情侶款最是甜蜜。"
   },
   {
@@ -206,7 +206,7 @@
     "sold": 52,
     "createdAt": "2024-04-24",
     "category": "healing",
-    "image": "",
+    "image": "/images/微笑鯨魚玩偶.png",
     "description": "微笑鯨魚玩偶採高密度絨毛，尺寸約26×14×12cm，填充高彈性PP棉，重量約280g，手感細膩，可作車用或居家擺飾。"
   },
   {
@@ -216,7 +216,7 @@
     "sold": 47,
     "createdAt": "2024-04-23",
     "category": "healing",
-    "image": "",
+    "image": "/images/療癒青蛙公仔.png",
     "description": "療癒青蛙公仔以植絨布料製成，尺寸約18×12×8cm，填充PP棉，重量約220g，細節精緻，療癒心靈。"
   },
   {
@@ -226,7 +226,7 @@
     "sold": 65,
     "createdAt": "2024-04-22",
     "category": "healing",
-    "image": "",
+    "image": "/images/草原綿羊抱枕.png",
     "description": "草原綿羊抱枕採超柔絨毛面料，尺寸約30×20×15cm，填充高回彈PP棉，重量約320g，可當抱枕或午睡枕，放在客廳或臥室都很療癒。"
   },
   {
@@ -236,7 +236,7 @@
     "sold": 40,
     "createdAt": "2024-04-21",
     "category": "useful",
-    "image": "",
+    "image": "/images/咖啡熊馬克杯.png",
     "description": "咖啡熊馬克杯採用高白瓷材質，容量約350ml，高約12cm，寬約9cm，重量約300g，微波爐與洗碗機安全，握把符合人體工學。"
   },
   {
@@ -246,7 +246,7 @@
     "sold": 38,
     "createdAt": "2024-04-20",
     "category": "useful",
-    "image": "",
+    "image": "/images/小鹿筆筒.png",
     "description": "小鹿筆筒以PP塑料製作，尺寸約18×10×8cm，內部分隔可調，底部防滑設計，適合收納筆具與剪刀等小物。"
   },
   {
@@ -256,7 +256,7 @@
     "sold": 55,
     "createdAt": "2024-04-19",
     "category": "healing",
-    "image": "",
+    "image": "/images/海豹療癒球.png",
     "description": "海豹療癒球採食品級矽膠，直徑約8cm，柔軟可捏，彈性十足，重量約60g，隨身攜帶，隨時紓壓放鬆。"
   },
   {
@@ -266,7 +266,7 @@
     "sold": 60,
     "createdAt": "2024-04-18",
     "category": "useful",
-    "image": "",
+    "image": "/images/森林熊便條紙.png",
     "description": "森林熊便條紙包含100張，單張尺寸約10×10cm，印有淡雅熊圖案，紙質厚實，不易透墨，撕取方便。"
   },
   {
@@ -276,7 +276,7 @@
     "sold": 42,
     "createdAt": "2024-04-17",
     "category": "couple",
-    "image": "",
+    "image": "/images/貓咪玻璃杯.png",
     "description": "貓咪玻璃杯採用耐熱硼矽酸鹽玻璃，容量約320ml，高約13cm，附立體貓耳把手，造型俏皮，冰熱飲皆宜。"
   },
   {
@@ -286,7 +286,7 @@
     "sold": 30,
     "createdAt": "2024-04-16",
     "category": "useful",
-    "image": "",
+    "image": "/images/長頸鹿置物架.png",
     "description": "長頸鹿置物架結合松木底座與鐵線支架，尺寸約40×15×10cm，可承重約3kg，適合展示書籍或小盆栽。"
   },
   {
@@ -296,7 +296,7 @@
     "sold": 70,
     "createdAt": "2024-04-15",
     "category": "healing",
-    "image": "",
+    "image": "/images/迷你刺蝟燈.png",
     "description": "迷你刺蝟燈採ABS與PC材質，尺寸約12×12×12cm，內置暖光LED，USB供電或3小時續航電池，附調光功能。"
   },
   {
@@ -306,7 +306,7 @@
     "sold": 28,
     "createdAt": "2024-04-14",
     "category": "useful",
-    "image": "",
+    "image": "/images/樹懶隨身鏡.png",
     "description": "樹懶隨身鏡採不鏽鋼鏡面與ABS外框，折疊後尺寸約8×8×1cm，輕巧便攜，補妝隨時利用。"
   },
   {
@@ -316,7 +316,7 @@
     "sold": 50,
     "createdAt": "2024-04-13",
     "category": "useful",
-    "image": "",
+    "image": "/images/狐狸收納袋.png",
     "description": "狐狸收納袋以防水牛津布製成，尺寸約25×15cm，多夾層與拉鍊設計，適合旅行或日常收納。"
   },
   {
@@ -326,7 +326,7 @@
     "sold": 62,
     "createdAt": "2024-04-12",
     "category": "healing",
-    "image": "",
+    "image": "/images/鴨子夜燈.png",
     "description": "鴨子夜燈採柔軟矽膠材質，尺寸約10×10×8cm，內建觸控LED，3段調光與定時關燈功能，適合兒童房。"
   },
   {
@@ -336,7 +336,7 @@
     "sold": 36,
     "createdAt": "2024-04-11",
     "category": "useful",
-    "image": "",
+    "image": "/images/胖胖熊便當袋.png",
     "description": "胖胖熊便當袋採隔熱PEVA內裡與棉質外層，尺寸約25×20×10cm，容量1L，附背帶，保溫防漏。"
   },
   {
@@ -346,17 +346,17 @@
     "sold": 45,
     "createdAt": "2024-04-10",
     "category": "useful",
-    "image": "",
+    "image": "/images/羊駝造型杯墊.png",
     "description": "羊駝造型杯墊採軟木底與EVA泡棉，上層厚度0.5cm，尺寸10×10cm，吸水隔熱，防滑耐用。"
   },
   {
     "id": 36,
-    "name": "迷你兔化妝鏡",
+    "name": "兔子書籤",
     "price": 200,
     "sold": 53,
     "createdAt": "2024-04-09",
     "category": "useful",
-    "image": "",
+    "image": "/images/兔子書籤.png",
     "description": "迷你兔化妝鏡採壓克力鏡面與ABS外殼，尺寸約12×10×1cm，配LED補光燈，USB充電，角度可調。"
   },
   {
@@ -366,7 +366,7 @@
     "sold": 49,
     "createdAt": "2024-04-08",
     "category": "useful",
-    "image": "",
+    "image": "/images/療癒熊桌曆.png",
     "description": "療癒熊桌曆為紙質月曆，尺寸15×10cm，12個月份，螺旋裝訂，含桌面支架，兼具裝飾與實用。"
   },
   {
@@ -376,7 +376,7 @@
     "sold": 41,
     "createdAt": "2024-04-07",
     "category": "useful",
-    "image": "",
+    "image": "/images/企鵝筆記本.png",
     "description": "企鵝筆記本為A5硬殼設計，尺寸21×14.8cm，內含100張點陣頁，封面防水塗層，耐用好書寫。"
   },
   {
@@ -386,7 +386,7 @@
     "sold": 57,
     "createdAt": "2024-04-06",
     "category": "couple",
-    "image": "",
+    "image": "/images/萌犬隨行杯.png",
     "description": "萌犬隨行杯採不鏽鋼真空保溫，容量約450ml，高約17cm，附矽膠杯套與防漏蓋，外出飲用超便捷。"
   },
   {
@@ -396,7 +396,7 @@
     "sold": 68,
     "createdAt": "2024-04-05",
     "category": "useful",
-    "image": "",
+    "image": "/images/貓掌滑鼠墊.png",
     "description": "貓掌滑鼠墊採記憶棉表層與橡膠底座，尺寸約25×20×0.5cm，符合人體工學，防滑耐用，提升操控舒適度。"
   }
 ]

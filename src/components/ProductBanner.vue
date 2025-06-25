@@ -32,7 +32,7 @@ defineProps({
   }
   
   @include respond-lg {
-    height: 100vh;
+    height: 70vh;
   }
 
   .content {

@@ -59,7 +59,7 @@ const router = createRouter({
       return savedPosition
     }
     // 默认都滚到顶部
-    return { left: 0, top: 0 }
+    return { top: 0 }
   }
 })
 

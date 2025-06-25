@@ -84,12 +84,20 @@ const handleCartOpen = () => {
   padding: 16px;
   background: $color-header-bg;
   transition: background 0.3s ease;
-  z-index: 1000;
+  z-index: 100;
+
+  @include respond-lg {
+    padding: 16px 32px;
+  }
 
   .logo { 
     font-size: 20px;
     font-weight: bold;
     color: $color-light-text; // 根據你的 UI 顏色
+
+    @include respond-sm {
+      font-size: 24px;
+    }
 
     @include respond-lg {
       font-size: 32px;
