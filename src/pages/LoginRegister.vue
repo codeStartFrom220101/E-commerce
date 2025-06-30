@@ -1,7 +1,7 @@
 <template>
   <div class="banner-grid">
     <LoginBanner
-      imageUrl="/images/loginBanner.png"
+      imageUrl="/E-commerce/images/loginBanner.png"
       :items="[
         { tag: '限時活動', text: '首次註冊即贈 $30元購物金' },
         { tag: '限時活動', text: '無須重新註冊點選忘記密碼登入完成送 $100購物金' },
