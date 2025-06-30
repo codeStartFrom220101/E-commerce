@@ -12,6 +12,7 @@ export const useProductStore = defineStore('productStore', {
     // 從 public/products.json 載入 mock 資料
     async fetchProducts() {
       try {
+        
         const url = import.meta.env.BASE_URL + 'data/products.json'
         const res = await fetch(url)
         if (!res.ok) {
