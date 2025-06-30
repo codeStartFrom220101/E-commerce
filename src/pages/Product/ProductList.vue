@@ -137,10 +137,10 @@ function prevPage() {
 
 // 7. 其他固定資料
 const bannerMap = {
-  all:    { title: '探索全站好物',     background: '/images/飛機啦.png' },
-  couple: { title: '甜蜜情侶專區',     background: '/images/BANNER情侶商品.png' },
-  healing:{ title: '療癒小物集合',     background: '/images/BANNER四商品.png' },
-  useful: { title: '實用生活選品',     background: '/images/banner-useful.jpg' }
+  all:    { title: '探索全站好物',     background: '/E-commerce/images/飛機啦.png' },
+  couple: { title: '甜蜜情侶專區',     background: '/E-commerce/images/BANNER情侶商品.png' },
+  healing:{ title: '療癒小物集合',     background: '/E-commerce/images/BANNER四商品.png' },
+  useful: { title: '實用生活選品',     background: '/E-commerce/images/banner-useful.jpg' }
 }
 const bannerTitle = computed(() =>
   bannerMap[category.value]?.title || '精選商品'
@@ -220,6 +220,7 @@ const sortOptions2 = [
 
         @include respond-lg {
           font-size: 20px;
+          
         }
 
         @include respond-xxl {

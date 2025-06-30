@@ -30,7 +30,7 @@ const currentStep = computed(() => {
 
 <style scoped lang="scss">
 .checkout-layout {
-  margin-top: 74px;
+  padding-top: 74px;
 }
 
 .router-layout {

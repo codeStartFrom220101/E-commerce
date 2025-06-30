@@ -70,6 +70,7 @@ function goToHome() {
 </script>
 
 <style scoped lang="scss">
+@use "sass:color";
 .card {
     background: #fff;
     padding: 24px;
@@ -127,7 +128,7 @@ function goToHome() {
       margin-bottom: 16px;
 
       &:hover {
-        background: darken(#cda15c, 5%);
+        background-color: color.adjust(#cda15c, $lightness: -5%);
       }
     }
   }

@@ -31,7 +31,7 @@
 
     <!-- 推薦選購情侶商品 -->
     <PromoBanner
-      image="/images/promoBanner.png"
+      image="/E-commerce/images/promoBanner.png"
       title="把微小的幸福，送給最愛的人"
       ctaText="立即選購"
     />
