@@ -18,8 +18,6 @@ export const useCartStore = defineStore('cart', {
      * 若 payload.quantity 未指定，則預設為 1
      */
     addItem(payload) {
-      console.log('cartStore', payload);
-      
       const qty = payload.quantity ?? 1
       const existing = this.items.find(item => item.id === payload.id)
       if (existing) {

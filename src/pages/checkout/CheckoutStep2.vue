@@ -1,50 +1,49 @@
 <template>
   <div class="checkout-step2">
-
-
-    <!-- 2. 訂單資訊小結（可選） -->
+    <!-- 訂單資訊小結 -->
     <div class="top-block">
       <FrameContainer>
         <template #header>訂購商品</template>
-        <!-- 可折疊商品列表 -->
         <div v-show="toggleState">
           <CartItemRow :items="cartItems" :editable="false" />
         </div>
-        <!-- 小計 -->
         <div class="sub-total" v-if="toggleState">
           <span>小計：</span><span>NT$ {{ subtotal }}</span>
         </div>
-        <!-- 運費 -->
         <div class="shipping-fee" v-if="toggleState">
           <span>運費：</span><span>NT$ {{ shippingFee }}</span>
         </div>
-        <!-- 折扣資訊 -->
         <div class="discount-info" v-if="toggleState && promotions.length">
           <div v-for="promo in promotions" :key="promo.id" class="promo-item">
             <span>{{ promo.name }}：</span>
             <span class="amount">-NT$ {{ promo.amount }}</span>
           </div>
         </div>
-        <!-- 折後合計 -->
         <div class="final-total" v-if="toggleState">
           <span>折後合計：</span>
           <span class="amount">NT$ {{ subtotal + shippingFee - totalDiscount }}</span>
         </div>
-        <!-- 展開／收合按鈕 -->
         <div class="order-toggle" @click="toggleCart">
           <font-awesome-icon :icon="['fas', toggleState ? 'chevron-up' : 'chevron-down']" />
         </div>
       </FrameContainer>
     </div>
 
-    <!-- 3. 顧客資料 -->
+    <!-- 顧客資料與其他區塊 -->
     <div class="bottom-block">
       <FrameContainer>
         <template #header>顧客資料</template>
-        <FormInput v-model="form.customerName" label="姓名" placeholder="請輸入姓名" />
-        <FormInput v-model="form.email" label="電子信箱" placeholder="abc@cdefg.com.tw" type="email" />
-        <FormInput v-model="form.phone" label="電話號碼" placeholder="0912345678" type="tel" />
-        <FormSelect v-model="form.gender" label="性別" :options="genderOptions" defaultLabel="請選擇性別" />
+        <FormInput v-model="form.customerName" label="姓名" placeholder="請輸入姓名" :error="errors.customerName" />
+        <FormInput v-model="form.email" label="電子信箱" placeholder="abc@cdefg.com.tw" type="email" :error="errors.email" />
+        <FormInput v-model="form.phone" label="電話號碼" placeholder="0912345678" type="tel" :error="errors.phone" />
+        <FormSelect
+          v-model="form.gender"
+          label="性別"
+          :options="genderOptions"
+          defaultLabel="請選擇性別"
+          :error="errors.gender"
+          @blur="() => null"
+        />
         <div class="birthdate">
           <h6 class="birth-title">生日日期</h6>
           <FormSelect v-model="form.birthYear" :options="yearOptions" defaultLabel="年" />
@@ -52,8 +51,7 @@
           <FormSelect v-model="form.birthDay" :options="dayOptions" defaultLabel="日" />
         </div>
       </FrameContainer>
-  
-      <!-- 4. 送貨資料 -->
+
       <FrameContainer>
         <template #header>
           送貨資料 <span class="fee">運費：{{ shippingFeeText }}</span>
@@ -62,8 +60,8 @@
         <label class="checkbox">
           <input type="checkbox" v-model="sameAsCustomer" /> 與顧客資料相同
         </label>
-        <FormInput v-model="form.recipientName" label="收件人姓名" placeholder="請輸入收件人姓名" />
-        <FormInput v-model="form.recipientPhone" label="收件人電話" placeholder="0912345678" type="tel" />
+        <FormInput v-model="form.recipientName" label="收件人姓名" placeholder="請輸入收件人姓名" :error="errors.recipientName" @blur="handleBlur('customerName')"/>
+        <FormInput v-model="form.recipientPhone" label="收件人電話" placeholder="0912345678" type="tel" :error="errors.recipientPhone" />
         <div class="address-select">
           <h6>地址</h6>
           <div class="grid-2">
@@ -71,21 +69,22 @@
               v-model="form.region"
               :options="regionOptions"
               defaultLabel="請選擇縣市"
+              :error="errors.region"
             />
             <FormSelect
               v-model="form.city"
               :options="cityOptions"
               defaultLabel="請選擇鄉鎮"
+              :error="errors.city"
             />
           </div>
-          <FormInput v-model="form.address" placeholder="請輸入地址" />
+          <FormInput v-model="form.address" placeholder="請輸入地址" :error="errors.address" />
         </div>
         <label class="checkbox">
           <input type="checkbox" v-model="form.saveAddress" /> 儲存為預設收貨地址
         </label>
       </FrameContainer>
-  
-      <!-- 5. 付款資料 -->
+
       <FrameContainer>
         <template #header>
           付款資料 <span class="total">合計：NT$ {{ subtotal + shippingFee - totalDiscount }}</span>
@@ -97,42 +96,19 @@
           </div>
         </div>
       </FrameContainer>
-  
-      <!-- 6. 發票資訊 -->
+
       <FrameContainer>
         <template #header>索取發票</template>
-        <FormSelect
-          v-model="form.invoiceType"
-          label="發票類型"
-          :options="invoiceTypeOptions"
-          defaultLabel="請選擇發票類型"
-        />
+        <FormSelect v-model="form.invoiceType" label="發票類型" :options="invoiceTypeOptions" defaultLabel="請選擇發票類型" />
         <div v-if="form.invoiceType === 'company'">
           <FormInput v-model="form.companyName" label="公司抬頭" placeholder="請輸入公司抬頭" />
           <FormInput v-model="form.taxId" label="統一編號" placeholder="請輸入統一編號" type="tel" />
         </div>
-        <FormSelect
-          v-if="form.invoiceType === 'eInvoice'"
-          v-model="form.invoiceMethod"
-          label="載具類別"
-          :options="invoiceMethodOptions"
-          defaultLabel="請選擇載具"
-        />
-        <FormInput
-          v-if="form.invoiceMethod === 'certificate'"
-          v-model="form.citizenCertificate"
-          label="自然人憑證卡號"
-          placeholder="請輸入憑證卡號"
-        />
-        <FormInput
-          v-if="form.invoiceMethod === 'mobile'"
-          v-model="form.mobileCarrier"
-          label="手機條碼載具"
-          placeholder="請輸入手機條碼"
-        />
+        <FormSelect v-if="form.invoiceType === 'eInvoice'" v-model="form.invoiceMethod" label="載具類別" :options="invoiceMethodOptions" defaultLabel="請選擇載具" />
+        <FormInput v-if="form.invoiceMethod === 'certificate'" v-model="form.citizenCertificate" label="自然人憑證卡號" placeholder="請輸入憑證卡號" />
+        <FormInput v-if="form.invoiceMethod === 'mobile'" v-model="form.mobileCarrier" label="手機條碼載具" placeholder="請輸入手機條碼" />
       </FrameContainer>
 
-      <!-- 7. 同意條款 & 完成訂單 -->
       <FrameContainer>
         <template #header>
           <label class="checkbox">
@@ -145,44 +121,36 @@
         </button>
       </FrameContainer>
     </div>
-
   </div>
 </template>
 
 <script setup>
-
-import { ref, watch, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, watch, computed, onMounted } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
 import { useCheckoutStore } from '@/stores/checkoutStore'
 import { usePromotionStore } from '@/stores/promotionStore'
-import { useRouter } from 'vue-router'
+import { useForm } from 'vee-validate'
+import * as yup from 'yup'
 
 import FrameContainer from '@/components/FrameContainer.vue'
 import FormInput from '@/components/FormInput.vue'
 import FormSelect from '@/components/FormSelect.vue'
 import CartItemRow from '@/components/CartItemRow.vue'
 
-// Checkout Store
 const checkoutStore = useCheckoutStore()
-// 使用 promotionStore 處理折扣明細
 const promoStore = usePromotionStore()
 
-// 訂購商品列表（含加購）
 const cartItems = computed(() => checkoutStore.items)
-// 小計、運費、折扣、折後總計
 const subtotal = computed(() => checkoutStore.subtotal)
 const shippingFee = computed(() => checkoutStore.shippingFee)
 const shippingFeeText = computed(() => checkoutStore.shippingFeeText)
 const totalDiscount = computed(() => checkoutStore.totalDiscount)
-const grandTotal = computed(() => checkoutStore.grandTotal)
-// 折扣明細
 const promotions = computed(() => promoStore.promoDiscounts)
 
-// 切換商品列表
 const toggleState = ref(true)
 function toggleCart() { toggleState.value = !toggleState.value }
 
-// 表單資料
 const form = reactive({
   customerName: '', email: '', phone: '', gender: '', birthYear: '', birthMonth: '', birthDay: '',
   region: checkoutStore.region, city: checkoutStore.city, address: '', saveAddress: false,
@@ -191,7 +159,24 @@ const form = reactive({
   recipientName: '', recipientPhone: ''
 })
 
-// 同顧客資料
+const schema = yup.object({
+  customerName: yup.string().required('請輸入姓名'),
+  email: yup.string().email('格式錯誤').required('請輸入電子信箱'),
+  phone: yup.string().matches(/^09\d{8}$/, '請輸入正確電話號碼').required(),
+  gender: yup.string().required('請選擇性別'),
+  region: yup.string().required('請選擇縣市'),
+  city: yup.string().required('請選擇鄉鎮'),
+  address: yup.string().required('請輸入地址'),
+  recipientName: yup.string().required('請輸入收件人姓名'),
+  recipientPhone: yup.string().matches(/^09\d{8}$/, '請輸入正確收件人電話'),
+  agreeTerms: yup.bool().oneOf([true], '請勾選同意條款'),
+})
+
+const { handleSubmit, errors } = useForm({
+  validationSchema: schema,
+  initialValues: form
+})
+
 const sameAsCustomer = ref(false)
 watch(sameAsCustomer, val => {
   if (val) {
@@ -200,7 +185,6 @@ watch(sameAsCustomer, val => {
   }
 })
 
-// 發票選項
 const invoiceTypeOptions = [
   { label: '公司戶（紙本）', value: 'company' },
   { label: '雲端發票', value: 'eInvoice' }
@@ -211,7 +195,6 @@ const invoiceMethodOptions = [
   { label: '會員載具(將會直接寄入您的電子信箱)', value: 'member' }
 ]
 
-// 性別與生日
 const genderOptions = [
   { label: '男', value: 'male' },
   { label: '女', value: 'female' },
@@ -221,7 +204,6 @@ const yearOptions = Array.from({ length: 100 }, (_, i) => ({ label: String(1950 
 const monthOptions = Array.from({ length: 12 }, (_, i) => ({ label: String(i + 1), value: i + 1 }))
 const dayOptions = Array.from({ length: 31 }, (_, i) => ({ label: String(i + 1), value: i + 1 }))
 
-// 台灣縣市與鄉鎮
 const regionOptions = ref([])
 const cityOptions = ref([])
 
@@ -250,15 +232,16 @@ watch(() => form.region, code => {
 
 onMounted(fetchRegions)
 
-// 完成訂單
 const router = useRouter()
-function submitOrder() {
-  if (!form.agreeTerms) return
-  // 同步 Step2 表單到 store
-  checkoutStore.setStep2Data({ ...form })
+const submitOrder = handleSubmit((values) => {
+  console.log(123);
+  if (!values.agreeTerms) return
+  
+  checkoutStore.setStep2Data({ ...values })
   router.push({ name: 'CheckoutStep3' })
-}
+})
 </script>
+
 
 <style scoped lang="scss">
 @use "sass:color";

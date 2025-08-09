@@ -3,7 +3,7 @@
 
     <!-- Hero Banner 區 -->
     <div class="homeSlider">
-      <HomeSlider />
+      <SliderCostum />
     </div>
 
     <!-- 商品分類導覽區 -->
@@ -49,7 +49,8 @@
 </template>
 
 <script setup>
-import HomeSlider from '@/components/HomeSlider.vue'
+// import HomeSlider from '@/components/HomeSlider.vue'
+import SliderCostum from '@/components/SliderCostum.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import ProductSlider from '@/components/ProductSlider.vue'

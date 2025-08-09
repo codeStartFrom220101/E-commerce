@@ -1,50 +1,33 @@
-<!-- src/components/FormSelect.vue -->
 <template>
-  <div class="form-field">
+  <div class="form-select">
     <label v-if="label">{{ label }}</label>
     <select
       :value="modelValue"
       @change="$emit('update:modelValue', $event.target.value)"
+      @blur="$emit('blur', $event)"
     >
-      <!-- 可变式的「请选择…」默认项 -->
-      <option
-        v-if="defaultLabel"
-        disabled
-        value=""
-        class="default"
-      >{{ defaultLabel }}</option>
-
-      <!-- 真正的选项 -->
-      <option
-        v-for="opt in options"
-        :key="opt.value"
-        :value="opt.value"
-      >
-        {{ opt.label }}
+      <option disabled value="">{{ defaultLabel }}</option>
+      <option v-for="option in options" :key="option.value" :value="option.value">
+        {{ option.label }}
       </option>
     </select>
     <p v-if="error" class="error">{{ error }}</p>
-    <p v-if="fig"   class="fig">{{ fig }}</p>
   </div>
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue'
-
 const props = defineProps({
-  modelValue:    { type: [String, Number], default: '' },
-  label:         { type: String, default: '' },
-  options:       { type: Array, default: () => [] },    // [{ label, value }]
-  defaultLabel:  { type: String, default: '' },         // <— 新增
-  error:         { type: String, default: '' },
-  fig:           { type: String, default: '' },
+  modelValue: [String, Number],
+  label: String,
+  options: Array,
+  defaultLabel: String,
+  error: String,
 })
-
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'blur'])
 </script>
 
 <style scoped lang="scss">
-.form-field {
+.form-select {
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
@@ -60,15 +43,10 @@ const emit = defineEmits(['update:modelValue'])
     border: 1px solid $color-border;
     border-radius: 4px;
     font-size: 14px;
-    background: #fff;
 
     &:focus {
       outline: none;
       border-color: $color-primary;
-    }
-
-    .default {
-      color: $color-border;
     }
   }
 
@@ -76,11 +54,6 @@ const emit = defineEmits(['update:modelValue'])
     margin-top: 4px;
     font-size: 12px;
     color: #C9154A;
-  }
-
-  .fig {
-    margin-top: 4px;
-    font-size: 12px;
   }
 }
 </style>
